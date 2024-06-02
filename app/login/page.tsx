@@ -8,6 +8,7 @@ import Image from 'next/image';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(''); // Add error state
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
@@ -24,26 +25,38 @@ export default function LoginPage() {
     }, []);
 
     const handleSignUp = async () => {
-        await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                emailRedirectTo: `${location.origin}/auth/callback`
-            }
-        });
-        router.refresh();
-        setEmail('');
-        setPassword('');
+        try {
+            await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    emailRedirectTo: `${location.origin}/auth/callback`
+                }
+            });
+            router.push('/');
+        } catch (error) {
+            console.error('Error signing up:', error);
+            setError('Error signing up');
+        }
     };
 
     const handleSignIn = async () => {
-        await supabase.auth.signInWithPassword({
-            email,
-            password
-        });
-        router.refresh();
-        setEmail('');
-        setPassword('');
+        try {
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+            if (error) {
+                setError('Wrong email or password');
+                setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
+                return;
+            }
+            router.push('/');
+        } catch (error) {
+            console.error('Error signing in:', error);
+            setError('Error signing in');
+            setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
+        }
     };
 
     const handleLogout = async () => {
@@ -52,62 +65,49 @@ export default function LoginPage() {
         setUser(null);
     };
 
-    const generateRandomPosition = (existingPositions: any, maxWidth: any, maxHeight: any, imageSize: any) => {
-        let position: any;
-        let isValid: any;
-
-        do {
-            position = {
-                x: Math.floor(Math.random() * (maxWidth - imageSize)),
-                y: Math.floor(Math.random() * (maxHeight - imageSize))
-            };
-
-            isValid = existingPositions.every(existingPosition => {
-                const distance = Math.sqrt(
-                    Math.pow(existingPosition.x - position.x, 2) +
-                    Math.pow(existingPosition.y - position.y, 2)
-                );
-                return distance > imageSize;
-            });
-        } while (!isValid);
-
-        return position;
-    };
-
-const BackgroundImages = ({ count, imageSize }: { count: number, imageSize: number }) => {
+    const BackgroundImages = ({ count, imageSize }) => {
         const images = ['/logo-3.png', '/logo-4.png', '/logo-5.png'];
         const [imageElements, setImageElements] = useState([]);
 
         useEffect(() => {
-            const positions = [];
             const elements = [];
+            const numRows = Math.ceil(Math.sqrt(count));
+            const numCols = Math.ceil(count / numRows);
+            const spacingX = window.innerWidth / numCols;
+            const spacingY = window.innerHeight / numRows;
 
             for (let i = 0; i < count; i++) {
-                const { x, y } = generateRandomPosition(positions, window.innerWidth, window.innerHeight, imageSize);
-                positions.push({ x, y });
+                const row = Math.floor(i / numCols);
+                const col = i % numCols;
+                const x = col * spacingX + spacingX / 2 - imageSize / 2;
+                const y = row * spacingY + spacingY / 2 - imageSize / 2;
                 const image = images[Math.floor(Math.random() * images.length)];
-                elements.push(
-                    <Image
-                        key={i}
-                        src={image}
-                        alt="background icon"
-                        style={{
-                            position: 'absolute',
-                            left: `${x}px`,
-                            top: `${y}px`,
-                            opacity: 0.7,
-                            zIndex: 1,
-                        }}
-                        width={imageSize}
-                        height={imageSize}
-                    />
-                );
+                elements.push({ image, x, y });
             }
 
             setImageElements(elements);
         }, [count, imageSize]);
 
-        return <>{imageElements}</>;
+        return (
+            <>
+                {imageElements.map((element, i) => (
+                    <Image
+                        key={i}
+                        src={element.image}
+                        alt="background icon"
+                        style={{
+                            position: 'absolute',
+                            left: `${element.x}px`,
+                            top: `${element.y}px`,
+                            opacity: 0.5,
+                            zIndex: 1,
+                        }}
+                        width={imageSize}
+                        height={imageSize}
+                    />
+                ))}
+            </>
+        );
     };
 
     console.log({ loading, user });
@@ -136,7 +136,7 @@ const BackgroundImages = ({ count, imageSize }: { count: number, imageSize: numb
 
     return (
         <main className="h-screen flex items-center justify-center bg-custom-yellow p-6 relative overflow-hidden">
-            <BackgroundImages count={40} imageSize={50} />
+            <BackgroundImages count={42} imageSize={50} />
             <div className="bg-custom-dark p-8 rounded-lg shadow-md w-96 z-50">
                 <Image
                     src="/logo-2.png"
@@ -146,6 +146,11 @@ const BackgroundImages = ({ count, imageSize }: { count: number, imageSize: numb
                     height={500}
                     priority
                 />
+                {error && (
+                    <p className="mb-4 text-sm font-bold text-red-500 text-center">
+                        {error}
+                    </p>
+                )}
                 <input
                     type="email"
                     name="email"
@@ -177,4 +182,4 @@ const BackgroundImages = ({ count, imageSize }: { count: number, imageSize: numb
             </div>
         </main>
     );
-};
+}
