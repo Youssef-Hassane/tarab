@@ -23,6 +23,7 @@ export default function ForgotPasswordPage() {
                 return;
             }
             setMessage('Password reset email sent.');
+			setTimeout(() => setMessage(''), 3000);
         } catch (error) {
             console.error('Error sending reset email:', error);
             setError('Error sending reset email');

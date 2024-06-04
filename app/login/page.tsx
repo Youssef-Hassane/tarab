@@ -107,8 +107,8 @@ export default function LoginPage() {
         return (
             <div className="h-screen flex items-center justify-center bg-custom-yellow p-6 relative overflow-hidden">
                 <BackgroundImages count={42} imageSize={50} />
-                <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-md w-96 text-center z-50">
-                    <h1 className="mb-4 text-xl font-bold text-gray-700 dark:text-gray-300">
+                <div className="bg-custom-dark dark:bg-gray-900 p-8 rounded-lg shadow-md w-96 text-center z-50">
+                    <h1 className="mb-4 text-xl font-bold text-white dark:text-gray-300">
                         You're already logged in
                     </h1>
                     <button
