@@ -1,4 +1,4 @@
-// login/page.tsx
+// signup/page.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -7,10 +7,13 @@ import { User } from '@supabase/supabase-js';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function LoginPage() {
+export default function SignUpPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(''); // Add error state
+    const [firstName, setFirstName] = useState(''); // Add first name state
+    const [lastName, setLastName] = useState(''); // Add last name state
+    const [username, setUsername] = useState(''); // Add username state
+    const [error, setError] = useState('');
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
@@ -26,23 +29,44 @@ export default function LoginPage() {
         getUser();
     }, []);
 
-    const handleSignIn = async () => {
+    const handleSignUp = async () => {
         try {
-            const { error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabase.auth.signUp({
                 email,
-                password
+                password,
+                options: {
+                    emailRedirectTo: `${location.origin}/auth/callback`
+                }
             });
+
             if (error) {
-                setError('Invalid Email or Password');
-                setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
+                setError('Error signing up');
                 return;
             }
-            router.push('/');
-            router.refresh();
+
+            if (data.user) {
+                const { error: profileError } = await supabase
+                    .from('profiles')
+                    .insert([
+                        {
+                            id: data.user.id,
+                            email,
+                            first_name: firstName,
+                            last_name: lastName,
+                            username,
+                        }
+                    ]);
+
+                if (profileError) {
+                    setError('Error saving profile data');
+                    return;
+                }
+
+                router.push('/');
+            }
         } catch (error) {
-            console.error('Error signing in:', error);
-            setError('Error signing in');
-            setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
+            console.error('Error signing up:', error);
+            setError('Error signing up');
         }
     };
 
@@ -125,7 +149,7 @@ export default function LoginPage() {
     return (
         <main className="h-screen flex items-center justify-center bg-custom-yellow p-6 relative overflow-hidden">
             <BackgroundImages count={42} imageSize={50} />
-            <div className="bg-custom-dark p-8 rounded-lg shadow-md width-100 z-50 flex items-center justify-center h-2/4	">
+            <div className="bg-custom-dark p-8 rounded-lg shadow-md width-100 z-50 flex items-center justify-center ">
                 <div className="w-96">
                     <Image
                         src="/logo-2.png"
@@ -136,14 +160,40 @@ export default function LoginPage() {
                         priority
                     />
                 </div>
+                <div className="bg-custom-dark p-8 rounded-lg shadow-md w-96 z-50 	">
 
-                <div className=" p-8 rounded-lg  w-96 z-50 relative flex-col items-center justify-center">
                     {error && (
-                        <p className="mb-4 text-sm font-bold text-red-500 absolute top-0 left-1/2 transform -translate-x-1/2 ">
+                        <p className="mb-4 text-sm font-bold text-red-500 text-center">
                             {error}
                         </p>
                     )}
 
+                    <div className=' w-80 flex justify-between'>
+                        <input
+                            type="text"
+                            name="firstName"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            placeholder="First Name"
+                            className="mr-1 mb-4 w-full p-3 rounded-md border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                        />
+                        <input
+                            type="text"
+                            name="lastName"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            placeholder="Last Name"
+                            className="ml-1 mb-4 w-full p-3 rounded-md border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
+                    <input
+                        type="text"
+                        name="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Username"
+                        className="mb-4 w-full p-3 rounded-md border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                    />
                     <input
                         type="email"
                         name="email"
@@ -160,14 +210,14 @@ export default function LoginPage() {
                         placeholder="Password"
                         className="mb-4 w-full p-3 rounded-md border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
                     />
+
                     <button
-                        onClick={handleSignIn}
+                        onClick={handleSignUp}
                         className="w-full mb-2 p-3 rounded-md bg-custom-yellow text-white hover:bg-gray-600 focus:outline-none"
                     >
-                        Sign In
+                        Sign Up
                     </button>
-                    <h1 className='text-white text-center text-sm pt-2'>Don't have account? <Link className='text-custom-yellow' href={'/signup'}>SignUp</Link></h1>
-                    <h1 className='text-white text-center text-sm pt-2'>Forgot Password? <Link className='text-custom-yellow' href={'/forgot-password'}>Reset</Link></h1>
+                    <h1 className='text-white text-center text-sm pt-2'>Already have an account? <Link className='text-custom-yellow' href={'/login'}>Login</Link></h1>
                 </div>
             </div>
         </main>
