@@ -23,6 +23,7 @@ const config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      
       colors: {
         'custom-yellow': '#ffbb50',
         'custom-dark': '#171b24',
