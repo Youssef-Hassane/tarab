@@ -125,7 +125,7 @@ export default function LoginPage() {
     return (
         <main className="h-screen flex items-center justify-center bg-custom-yellow p-6 relative overflow-hidden">
             <BackgroundImages count={42} imageSize={50} />
-            <div className="bg-custom-dark p-8 rounded-lg shadow-md width-100 z-50 flex items-center justify-center h-2/4	">
+            <div className="bg-custom-dark p-8 rounded-lg shadow-md width-100 z-50 flex items-center justify-center h-[25em]		">
                 <div className="w-96">
                     <Image
                         src="/logo-2.png"

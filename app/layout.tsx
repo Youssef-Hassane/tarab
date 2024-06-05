@@ -4,7 +4,7 @@ import "./globals.css";
 import { Sidebar } from "@/components/sidebar";
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-
+import React from 'react'; // Add this line
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +28,7 @@ export default async function RootLayout({
         {user ? (
           <>
             <Sidebar />
-            <main className="mx-5 mt-16 sm:ml-[270px] sm:mt-3">{children}</main>
+            <main className=" sm:ml-[270px]">{children}</main>
           </>
         ) : (
           <main>{children}</main>

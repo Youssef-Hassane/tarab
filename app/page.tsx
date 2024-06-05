@@ -1,10 +1,9 @@
 // app/page.tsx
-import Image from 'next/image'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import Link from 'next/link';
-import { NextResponse } from 'next/server';
 import { redirect } from 'next/navigation';
+import { MusicCard } from '../components/MusicCard'; // Add the import statement for the MusicCard component
+import { ScrollAreaHorizontalDemo, ScrollAreaHorizontalDemoArtists, ScrollAreaHorizontalDemoExplore } from '@/components/scroll';
 
 export default async function Home() {
 
@@ -18,10 +17,57 @@ export default async function Home() {
     return null;
   }
 
+
   return (
-    <main className="bg-custom-dark ">
+    <main className=" w-full h-screen bg-custom-dark">
+
+      <div className='h-auto w-full flex flex-col gap-2 justify-center items-center bg-custom-dark p-2'>
+
+        <div className='w-full justify-start'>
+          <h3 className='text-white font-extrabold text-start'>Explore</h3>
+        </div>
+
+        <div className=' bg-white w-[99%] h-[95%] rounded-lg '>
+          <ScrollAreaHorizontalDemoExplore />
+        </div>
+
+        <div className='w-full justify-start'>
+          <h1 className='text-white font-extrabold text-start'>Artists</h1>
+        </div>
+
+        <div className=' bg-white w-[99%] h-[95%] rounded-lg'>
+
+          <ScrollAreaHorizontalDemoArtists />
+
+        </div>
+        <div className='w-full justify-start'>
+          <h1 className='text-white font-extrabold text-start'>Songs</h1>
+        </div>
+
+        <div className=' bg-white w-[99%] h-[95%] rounded-lg'>
+
+          <ScrollAreaHorizontalDemo />
+
+        </div>
+        <div className='w-full justify-start'>
+          <h1 className='text-white font-extrabold text-start'>Albums</h1>
+        </div>
+
+        <div className=' bg-white w-[99%] h-[95%] rounded-lg'>
+
+          <ScrollAreaHorizontalDemo />
+
+        </div>
 
 
+
+
+
+
+
+
+
+      </div>
     </main>
   );
 }
