@@ -58,7 +58,7 @@ export function SidebarDes(props: SidebarProps) {
 
 
 	return (
-		<aside className="bg-custom-dark h-screen w-[270px] max-w-xs fixed left-0 top-0 border-r">
+		<aside className="bg-custom-dark h-screen w-[270px] max-w-xs fixed left-0 top-0 border-r mb-[70px]">
 			<div className="h-full px-3 py-4 ">
 				
 				<Image
@@ -82,9 +82,9 @@ export function SidebarDes(props: SidebarProps) {
 							props.sidebarItems.extras
 						}
 					</div>
-					<div className='absolute left-0 bottom-3 w-full px-3'>
+					<div className='absolute left-0 bottom-[75px] w-full px-3 bg-custom-dark'>
 						<Separator className='absolute -top-3 left-0 w-full' />
-						<Popover>
+						<Popover >
 							<PopoverTrigger asChild>
 								<Button variant='ghost' className='w-full justify-start'>
 									<div className='flex justify-between items-center w-full'>

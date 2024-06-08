@@ -18,30 +18,33 @@ const sidebarItems: SidebarItems = {
 		{ label: 'Profile', href: '/item/profile', icon: User },
 	],
 	extras: (
-	  <div className='flex flex-col gap-2'>
-		<SidebarButton icon={MoreHorizontal} className='w-full'>
-		  More
-		</SidebarButton>
-		<SidebarButton
-		  className='w-full justify-center text-white'
-		  variant='default'
-		>
-		  Upload Song
-		</SidebarButton>
-	  </div>
+		<div className='flex flex-col gap-2'>
+			<SidebarButton icon={MoreHorizontal} className='w-full'>
+				More
+			</SidebarButton>
+			<SidebarButton
+				className='w-full justify-center text-white'
+				variant='default'
+			>
+				Upload Song
+			</SidebarButton>
+		</div>
 	),
-	
+
 }
 
 export function Sidebar() {
 
-	const isDesktop = useMediaQuery('(min-width: 640px)',{initializeWithValue: false});
+	const isDesktop = useMediaQuery('(min-width: 640px)', { initializeWithValue: false });
 
-	if(!isDesktop) {
-		return (<SidebarMob sidebarItems={sidebarItems}/>);
+	if (!isDesktop) {
+		return (<SidebarMob sidebarItems={sidebarItems} />);
 	}
 	return (
-		
-		<SidebarDes sidebarItems={sidebarItems}/>
+		<div>
+			<SidebarDes sidebarItems={sidebarItems} />
+			<SidebarDes sidebarItems={sidebarItems} />
+		</div>
+
 	);
 }
