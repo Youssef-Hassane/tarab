@@ -1,3 +1,4 @@
+// File: components/footer.tsx
 import { Button } from "./ui/button";
 import { Cast, Airplay, Pause, SkipForward, SkipBack, Repeat1, Repeat, Shuffle, Play } from 'lucide-react';
 import { Slider } from "@/components/ui/slider"
@@ -56,4 +57,3 @@ export function FooterSection() {
 	)
 
 }
-

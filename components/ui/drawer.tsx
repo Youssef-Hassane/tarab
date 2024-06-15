@@ -11,6 +11,7 @@ const Drawer = ({
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root
     shouldScaleBackground={shouldScaleBackground}
+    
     {...props}
   />
 )
@@ -38,7 +39,7 @@ const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
-  <DrawerPortal>
+  <DrawerPortal >
     <DrawerOverlay />
     <DrawerPrimitive.Content
       ref={ref}
@@ -48,7 +49,7 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      <div className="mx-auto -mt-2 mb-2  h-[6px] w-[150px] rounded-full bg-custom-dark " />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
