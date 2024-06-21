@@ -30,7 +30,7 @@ export default function SearchSection() {
 
   useEffect(() => {
     const fetchDefaultMusic = async () => {
-      const apiKey = 'AIzaSyBd3kWlXBn-ru42KFlmJq1TKFLkftdUU40';
+      const apiKey = 'AIzaSyDqDuEDaWkxNw6Pxo36x-MuF4yXrNEVTg4';
       const response = await fetch(
         `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&part=snippet&maxResults=50&q=تراكات&type=video`
       );
@@ -44,7 +44,7 @@ export default function SearchSection() {
   const handleSearch = async () => {
     if (!query) return;
 
-    const apiKey = 'AIzaSyBd3kWlXBn-ru42KFlmJq1TKFLkftdUU40';
+    const apiKey = 'AIzaSyDqDuEDaWkxNw6Pxo36x-MuF4yXrNEVTg4';
     const response = await fetch(
       `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&part=snippet&maxResults=50&q=${query}&type=video`
     );

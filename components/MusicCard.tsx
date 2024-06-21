@@ -74,7 +74,7 @@ export function ArtistsCard() {
 
 export function ExploreCard() {
   return (
-    <Card className="group w-[170px] h-auto max-h-[230px] bg-custom-dark border-none hover:bg-custom-yellow hover:text-custom-dark rounded-sm">
+    <Card className="group w-[170px] h-[230px] bg-custom-dark border-none hover:bg-custom-yellow hover:text-custom-dark rounded-sm">
       <div className="group w-full h-full bg-custom-dark border-none hover:bg-custom-yellow hover:text-custom-dark rounded-sm p-0 cursor-pointer">
         <div className="p-2">
           <CardHeader className="text-white p-0 relative">

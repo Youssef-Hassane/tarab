@@ -31,7 +31,7 @@ export default async function RootLayout({
             
             <Sidebar />
             <main className=" sm:ml-[270px]">{children}</main>
-            <FooterSection />
+            
           </>
         ) : (
           <main>{children}</main>
