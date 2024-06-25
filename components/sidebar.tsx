@@ -11,7 +11,7 @@ const sidebarItems: SidebarItems = {
 	links: [
 		{ label: 'Home', href: '/', icon: Home },
 		{ label: 'Explore', href: '/item/explore', icon: Disc },
-		{ label: 'Artists', href: '/item/artists', icon: MicVocal },
+		{ label: 'Artists', href: '/artists', icon: MicVocal },
 		{ label: 'Songs', href: '/item/songs', icon: AudioWaveform },
 		{ label: 'My list', href: '/item/list', icon: List, },
 		{ label: 'Albums', href: '/item/albums', icon: GalleryHorizontalEnd },

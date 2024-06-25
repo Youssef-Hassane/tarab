@@ -1,3 +1,5 @@
+// File: app/layout.tsx
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -6,6 +8,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import React from 'react'; // Add this line
 import { FooterSection } from "@/components/footer";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +34,7 @@ export default async function RootLayout({
             
             <Sidebar />
             <main className=" sm:ml-[270px]">{children}</main>
+            <FooterSection />
             
           </>
         ) : (
