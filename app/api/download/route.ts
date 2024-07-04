@@ -1,11 +1,10 @@
+// File: app/api/download/route.ts
 import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
-import { downloadVideo } from '../../../lib/downloadVideo';
-import { getVideoInfo } from '../../../lib/videoInfo'; // Import the function to get video info
-
-let downloadCount = 0;
+import ytdl from 'ytdl-core';
+import { getVideoInfo } from '../../../lib/videoInfo';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -21,16 +20,42 @@ export async function GET(req: Request) {
     fs.mkdirSync(downloadsDir, { recursive: true });
 
     const videoInfo = await getVideoInfo(url);
-    const videoTitle = videoInfo.title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_'); // Clean the title
-    downloadCount += 1;
-    const fileName = `${downloadCount}-${videoTitle}.mp4`;
+    const videoTitle = videoInfo.videoDetails.title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
+    const fileName = `${videoTitle}.mp4`;
     const filePath = path.join(downloadsDir, fileName);
 
-    await downloadVideo(url, filePath);
+    const videoStream = ytdl(url, { quality: '18' });
+    const writeStream = fs.createWriteStream(filePath);
 
-    return NextResponse.json({ message: 'Download complete', filePath }, { status: 200 });
+    let downloadedBytes = 0;
+    const totalBytes = parseInt(videoInfo.videoDetails.lengthSeconds) * 100000; // Approximate size
+
+    const encoder = new TextEncoder();
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        for await (const chunk of videoStream) {
+          downloadedBytes += chunk.length;
+          const progress = Math.min(100, Math.round((downloadedBytes / totalBytes) * 100));
+          
+          writeStream.write(chunk);
+          
+          controller.enqueue(encoder.encode(`${progress}\n`));
+        }
+        
+        writeStream.end();
+        controller.close();
+      }
+    });
+
+    return new NextResponse(stream, {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Transfer-Encoding': 'chunked'
+      },
+    });
   } catch (error) {
-    console.error(error);
+    console.error('Download error:', error);
     return NextResponse.json({ error: 'Failed to download video' }, { status: 500 });
   }
 }

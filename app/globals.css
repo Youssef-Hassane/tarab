@@ -105,5 +105,24 @@ body {
     @apply bg-background text-foreground;
   }
 }
+@keyframes shimmer-reverse {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
 
-
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0) 
+  );
+  background-size: 200% 200%;
+  animation: shimmer-reverse 1.5s infinite; /* Adjust duration for slower effect */
+  
+}
