@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 
 
-import HomePage from "./home";
+import HomePage from "./home/page";
 
 
 
@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     
-      <div className='bg-custom-dark'></div>
+      <HomePage />
     
   );
 }
