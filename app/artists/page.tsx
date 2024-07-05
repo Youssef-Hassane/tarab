@@ -14,22 +14,14 @@ import SearchSection from '@/components/SearchSection';
 import FooterSection from '@/components/footer';
 
 import TheCard from '@/components/card/TheCard';
-import {FakeCardArtists, FakeCard} from '@/components/card/FakeCard';
+import { FakeCardArtists, FakeCard } from '@/components/card/FakeCard';
 import ListOfChannels from '@/components/ListOfChannels';
 import { usePathname } from 'next/navigation';
 
-export default function main() {
+export default function ArtistsPage() {
   const resultsContext = useContext(Context_results);
   const isDrawerOpenContext = useContext(Context_isDrawerOpen);
 
-
-  // Check if contexts are available
-  if ( !resultsContext || !isDrawerOpenContext) {
-    return <FakeCard where="Artists"/>; // or some other placeholder
-  }
-
-  const { results, setResults } = resultsContext;
-  const { isDrawerOpen, setIsDrawerOpen } = isDrawerOpenContext;  
 
   const pathname = usePathname();
 
@@ -40,12 +32,21 @@ export default function main() {
     };
 
     loadDefaultMusic();
-  }, []);
+  }, [setResults]);
+
+  // Check if contexts are available
+  if (!resultsContext || !isDrawerOpenContext) {
+    return <FakeCard where="Artists" />; // or some other placeholder
+  }
+
+  const { results, setResults } = resultsContext;
+  const { isDrawerOpen, setIsDrawerOpen } = isDrawerOpenContext;
+
 
   return (
     <div className="bg-custom-dark">
       <aside className="bg-custom-dark text-base-content rounded h-[65px] w-full ">
-        <SearchSection where={"artists"} pathname={pathname}  />
+        <SearchSection where={"artists"} pathname={pathname} />
         <div className="bg-custom-dark w-full h-[calc(100vh-70px)] rounded-lg overflow-hidden pb-[70px] p-1">
           <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">
             <div className="">

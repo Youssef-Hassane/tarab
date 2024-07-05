@@ -29,10 +29,9 @@ export default async function RootLayout({
       <body className={inter.className}>
         {user ? (
           <>
-            
-            <HomePage children={children} />
-            
-            
+            <HomePage>
+              {children}
+            </HomePage>
           </>
         ) : (
           <main>{children}</main>

@@ -40,13 +40,13 @@ export default function VideoPlayerFavorite() {
 	const downloadProgressContext = useContext(Context_downloadProgress);
 	const isDownloadingContext = useContext(Context_isDownloading);
 	const playerRefsContext = useContext(Context_playerRefs);
+	const localPlayerRefs = useRef<{ [key: string]: ReactPlayer | null }>({});
+
+	const playerRefs = playerRefsContext || localPlayerRefs;
+
 	if (!queryContext || !resultsContext || !selectedVideoContext || !favoritesContext || !isDrawerOpenContext || !playingContext || !volumeContext || !oldVolumeContext || !playedContext || !highlightedCardIdContext || !shuffleContext || !repeatModeContext || !favoritesContext || !urlContext || !messageContext || !downloadProgressContext || !isDownloadingContext) {
 		return <div>Loading...</div>; // or some other placeholder
 	}
-	if (!selectedVideoContext || !playingContext || !volumeContext || !playedContext || !playerRefsContext) {
-		return null;
-	}
-
 
 	const { selectedVideo, setSelectedVideo } = selectedVideoContext;
 	const { favorites, setfavorites } = favoritesContext;
@@ -54,15 +54,6 @@ export default function VideoPlayerFavorite() {
 	const { played, setPlayed } = playedContext;
 	const { shuffle, setShuffle } = shuffleContext;
 	const { repeatMode, setRepeatMode } = repeatModeContext;
-
-	// Create a local ref if the context is not available
-	const localPlayerRefs = useRef<{ [key: string]: ReactPlayer | null }>({});
-	// Use the context ref if available, otherwise use the local ref
-	const playerRefs = playerRefsContext || localPlayerRefs;
-
-
-
-
 
 	if (!selectedVideo) {
 		return null; // or return a placeholder component

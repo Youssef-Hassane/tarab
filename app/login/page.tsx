@@ -1,6 +1,6 @@
 // login/page.tsx
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
@@ -10,7 +10,7 @@ import Link from 'next/link';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(''); // Add error state
+    const [error, setError] = useState('');
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
@@ -24,7 +24,7 @@ export default function LoginPage() {
             setLoading(false);
         }
         getUser();
-    }, []);
+    }, [supabase.auth]);
 
     const handleSignIn = async () => {
         try {
@@ -53,7 +53,7 @@ export default function LoginPage() {
     };
 
     const BackgroundImages = ({ count, imageSize }) => {
-        const images = ['/logo-3.png', '/logo-4.png', '/logo-5.png'];
+        const images = useMemo(() => ['/logo-3.png', '/logo-4.png', '/logo-5.png'], []);
         const [imageElements, setImageElements] = useState([]);
 
         useEffect(() => {
@@ -73,7 +73,7 @@ export default function LoginPage() {
             }
 
             setImageElements(elements);
-        }, [count, imageSize]);
+        }, [count, imageSize, images]);
 
         return (
             <>
@@ -109,7 +109,7 @@ export default function LoginPage() {
                 <BackgroundImages count={42} imageSize={50} />
                 <div className="bg-custom-dark dark:bg-gray-900 p-8 rounded-lg shadow-md w-96 text-center z-50">
                     <h1 className="mb-4 text-xl font-bold text-white dark:text-gray-300">
-                        You're already logged in
+                        You&apos;re already logged in
                     </h1>
                     <button
                         onClick={handleLogout}
@@ -166,7 +166,7 @@ export default function LoginPage() {
                     >
                         Sign In
                     </button>
-                    <h1 className='text-white text-center text-sm pt-2'>Don't have account? <Link className='text-custom-yellow' href={'/signup'}>SignUp</Link></h1>
+                    <h1 className='text-white text-center text-sm pt-2'>Don&apos;t have account? <Link className='text-custom-yellow' href={'/signup'}>SignUp</Link></h1>
                     <h1 className='text-white text-center text-sm pt-2'>Forgot Password? <Link className='text-custom-yellow' href={'/forgot-password'}>Reset</Link></h1>
                 </div>
             </div>

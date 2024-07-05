@@ -1,8 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 
-
-
-export async function GET(req) {
+export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get('query');
 
@@ -22,6 +20,10 @@ export async function GET(req) {
       return NextResponse.json({ error: data.error.message }, { status: response.status });
     }
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    } else {
+      return NextResponse.json({ error: 'An unknown error occurred' }, { status: 500 });
+    }
   }
 }

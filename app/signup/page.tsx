@@ -1,6 +1,6 @@
 // signup/page.tsx
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
@@ -27,7 +27,7 @@ export default function SignUpPage() {
             setLoading(false);
         }
         getUser();
-    }, []);
+    }, [supabase]);
 
     const handleSignUp = async () => {
         try {
@@ -77,7 +77,7 @@ export default function SignUpPage() {
     };
 
     const BackgroundImages = ({ count, imageSize }) => {
-        const images = ['/logo-3.png', '/logo-4.png', '/logo-5.png'];
+        const images = useMemo(() => ['/logo-3.png', '/logo-4.png', '/logo-5.png'], []);
         const [imageElements, setImageElements] = useState([]);
 
         useEffect(() => {
@@ -97,7 +97,7 @@ export default function SignUpPage() {
             }
 
             setImageElements(elements);
-        }, [count, imageSize]);
+        }, [count, imageSize, images]);
 
         return (
             <>
@@ -133,7 +133,7 @@ export default function SignUpPage() {
                 <BackgroundImages count={42} imageSize={50} />
                 <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-md w-96 text-center z-50">
                     <h1 className="mb-4 text-xl font-bold text-gray-700 dark:text-gray-300">
-                        You're already logged in
+                        You&apos;re already logged in
                     </h1>
                     <button
                         onClick={handleLogout}

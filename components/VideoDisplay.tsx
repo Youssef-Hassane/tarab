@@ -42,12 +42,6 @@ export default function VideoPlayer() {
 	const downloadProgressContext = useContext(Context_downloadProgress);
 	const isDownloadingContext = useContext(Context_isDownloading);
 	const playerRefsContext = useContext(Context_playerRefs);
-	if (!queryContext || !resultsContext || !selectedVideoContext || !channelVideosContext || !isDrawerOpenContext || !playingContext || !volumeContext || !oldVolumeContext || !playedContext || !highlightedCardIdContext || !shuffleContext || !repeatModeContext || !favoritesContext || !urlContext || !messageContext || !downloadProgressContext || !isDownloadingContext) {
-		return <div>Loading...</div>; // or some other placeholder
-	}
-	if (!selectedVideoContext || !playingContext || !volumeContext || !playedContext || !playerRefsContext) {
-		return null;
-	}
 
 
 	const { selectedVideo, setSelectedVideo } = selectedVideoContext;
@@ -65,6 +59,12 @@ export default function VideoPlayer() {
 
 
 
+	if (!queryContext || !resultsContext || !selectedVideoContext || !channelVideosContext || !isDrawerOpenContext || !playingContext || !volumeContext || !oldVolumeContext || !playedContext || !highlightedCardIdContext || !shuffleContext || !repeatModeContext || !favoritesContext || !urlContext || !messageContext || !downloadProgressContext || !isDownloadingContext) {
+		return <div>Loading...</div>; // or some other placeholder
+	}
+	if (!selectedVideoContext || !playingContext || !volumeContext || !playedContext || !playerRefsContext) {
+		return null;
+	}
 
 	if (!selectedVideo) {
 		return null; // or return a placeholder component

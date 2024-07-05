@@ -23,9 +23,7 @@ export default function DownloadButton({ type, video }) {
 
   const [isDownloaded, setIsDownloaded] = useState(false);
 
-  if (!urlContext || !selectedVideoContext || !isDownloadingContext || !downloadProgressContext || !messageContext || !downloadedVideosContext || !highlightedCardIdContext || !video) {
-    return null;
-  }
+
 
   const { selectedVideo, setSelectedVideo } = selectedVideoContext;
   const { isDownloading, setIsDownloading } = isDownloadingContext;
@@ -112,6 +110,10 @@ export default function DownloadButton({ type, video }) {
       setIsDownloading(false);
     }
   };
+
+  if (!urlContext || !selectedVideoContext || !isDownloadingContext || !downloadProgressContext || !messageContext || !downloadedVideosContext || !highlightedCardIdContext || !video) {
+    return null;
+  }
 
   if (type === 'small') {
     return (

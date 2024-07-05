@@ -14,9 +14,7 @@ export default function SearchSection({ where, pathname }) {
     const isFocusedContext = useContext(Context_isFocused);
     const showSuggestionsContext = useContext(Context_showSuggestions);
 
-    if (!queryContext || !resultsContext || !suggestionsContext || !isFocusedContext || !showSuggestionsContext) {
-        return null;
-    }
+
 
     const { query, setQuery } = queryContext;
     const { results, setResults } = resultsContext;
@@ -115,7 +113,10 @@ export default function SearchSection({ where, pathname }) {
         };
     }, [setShowSuggestions, setIsFocused]);
 
-
+    if (!queryContext || !resultsContext || !suggestionsContext || !isFocusedContext || !showSuggestionsContext) {
+        return null;
+    }
+    
     return (
         <div ref={searchContainerRef} className="search-container flex items-center h-full pl-5 pr-5 gap-2 justify-center">
             <div className="flex items-center h-full pl-5 pr-5 gap-2 justify-center">

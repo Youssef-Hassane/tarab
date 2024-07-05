@@ -17,11 +17,7 @@ export default function TopArtists() {
 	const isDrawerOpenContext = useContext(Context_isDrawerOpen);
 
 
-	// Check if contexts are available
-	if (!resultsContext || !isDrawerOpenContext) {
-		return <FakeCard where="Artists" />; // or some other placeholder
-	}
-
+	
 	const { resultsChannel, setResultsChannel } = resultsContext;
 	const { isDrawerOpen, setIsDrawerOpen } = isDrawerOpenContext;
 
@@ -33,7 +29,12 @@ export default function TopArtists() {
 		};
 
 		loadDefaultMusic();
-	}, []);
+	}, [setResultsChannel]);
+
+	// Check if contexts are available
+	if (!resultsContext || !isDrawerOpenContext) {
+		return <FakeCard where="Artists" />; // or some other placeholder
+	}
 
 	return (
 		<div className="bg-custom-dark p-4">

@@ -24,7 +24,7 @@ import ListOfVideoOfChannel from '@/components/ListOfVideoOfChannel';
 import InformationOfTheChannel from '@/components/InformationOfTheChannel';
 import SearchSection from '@/components/SearchSection';
 import TheCard from '@/components/card/TheCard';
-import {FakeCard} from '@/components/card/FakeCard';
+import { FakeCard } from '@/components/card/FakeCard';
 import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
 
@@ -44,10 +44,7 @@ export default function TopSongs() {
   const playerRefsContext = useContext(Context_playerRefs);
 
 
-  // Check if contexts are available
-  if (!resultsContext || !selectedVideoContext || !isDrawerOpenContext || !favoritesContext || !urlContext || !messageContext || !downloadProgressContext || !isDownloadingContext) {
-    return <FakeCard />; // or some other placeholder
-  }
+
 
   const { resultsSong, setResultsSong } = resultsContext;
   const { selectedVideo, setSelectedVideo } = selectedVideoContext;
@@ -55,10 +52,8 @@ export default function TopSongs() {
   const { favorites, setFavorites } = favoritesContext;
   const { url, setUrl } = urlContext;
   const { highlightedCardId, setHighlightedCardId } = highlightedCardIdContext;
-  const localPlayerRefs = useRef<{ [key: string]: ReactPlayer | null }>({}); // Create a local ref if the context is not available  
-  const playerRefs = playerRefsContext || localPlayerRefs; // Use the context ref if available, otherwise use the local ref
 
-  const pathname = usePathname();
+
 
   useEffect(() => {
     const loadDefaultMusic = async () => {
@@ -108,6 +103,11 @@ export default function TopSongs() {
     }
   }, [selectedVideo, setHighlightedCardId, setUrl]);
 
+  // Check if contexts are available
+  if (!resultsContext || !selectedVideoContext || !isDrawerOpenContext || !favoritesContext || !urlContext || !messageContext || !downloadProgressContext || !isDownloadingContext) {
+    return <FakeCard />; // or some other placeholder
+  }
+
   return (
     <div className="bg-custom-dark p-4">
       <h1 className="text-2xl font-bold mb-4">Top Songs</h1>
@@ -115,14 +115,14 @@ export default function TopSongs() {
         <div className="bg-custom-dark w-full rounded-lg overflow-hidden p-1">
           <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">
             <div className="">
-            {resultsSong && resultsSong.length > 0 ? (
+              {resultsSong && resultsSong.length > 0 ? (
                 <div className="flex gap-3">
                   {resultsSong.map((item: any) => (
-                    <TheCard item={item} where={"try"} />
+                    <TheCard item={item} where={"try"} key={item.id.videoId} />
                   ))}
                 </div>
               ) : (
-                  <FakeCard where={"search"}/>
+                <FakeCard where={"search"} />
               )}
               <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
                 <DrawerContent className="bg-custom-yellow h-[90%] w-[95%] left-[2.5%] p-5">

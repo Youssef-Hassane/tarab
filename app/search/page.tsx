@@ -24,14 +24,12 @@ import ListOfVideoOfChannel from '@/components/ListOfVideoOfChannel';
 import InformationOfTheChannel from '@/components/InformationOfTheChannel';
 import SearchSection from '@/components/SearchSection';
 import TheCard from '@/components/card/TheCard';
-import {FakeCard} from '@/components/card/FakeCard';
+import { FakeCard } from '@/components/card/FakeCard';
 import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
 
-
-
-
 export default function TryPage() {
+  // Always call hooks at the top level
   const resultsContext = useContext(Context_results);
   const selectedVideoContext = useContext(Context_selectedVideo);
   const isDrawerOpenContext = useContext(Context_isDrawerOpen);
@@ -43,34 +41,29 @@ export default function TryPage() {
   const isDownloadingContext = useContext(Context_isDownloading);
   const playerRefsContext = useContext(Context_playerRefs);
 
-
-  // Check if contexts are available
-  if (!resultsContext || !selectedVideoContext || !isDrawerOpenContext || !favoritesContext || !urlContext || !messageContext || !downloadProgressContext || !isDownloadingContext) {
-    return <FakeCard />; // or some other placeholder
-  }
-
-  const { results, setResults } = resultsContext;
-  const { selectedVideo, setSelectedVideo } = selectedVideoContext;
-  const { isDrawerOpen, setIsDrawerOpen } = isDrawerOpenContext;
-  const { favorites, setFavorites } = favoritesContext;
-  const { url, setUrl } = urlContext;
-  const { highlightedCardId, setHighlightedCardId } = highlightedCardIdContext;
-  const localPlayerRefs = useRef<{ [key: string]: ReactPlayer | null }>({}); // Create a local ref if the context is not available  
-  const playerRefs = playerRefsContext || localPlayerRefs; // Use the context ref if available, otherwise use the local ref
-
   const pathname = usePathname();
 
+  const localPlayerRefs = useRef<{ [key: string]: ReactPlayer | null }>({});
+  const playerRefs = playerRefsContext || localPlayerRefs;
+
+  const { results, setResults } = resultsContext || {};
+  const { selectedVideo, setSelectedVideo } = selectedVideoContext || {};
+  const { isDrawerOpen, setIsDrawerOpen } = isDrawerOpenContext || {};
+  const { favorites, setFavorites } = favoritesContext || {};
+  const { url, setUrl } = urlContext || {};
+  const { highlightedCardId, setHighlightedCardId } = highlightedCardIdContext || {};
+
+  // Fetch default music data
   useEffect(() => {
     const loadDefaultMusic = async () => {
       const items = await fetchDefaultMusic();
-      setResults(items);
+      setResults?.(items);
     };
 
     loadDefaultMusic();
   }, [setResults]);
 
-
-
+  // Fetch user's favorites from Supabase
   useEffect(() => {
     const fetchFavorites = async () => {
       const supabase = createClientComponentClient();
@@ -85,7 +78,7 @@ export default function TryPage() {
         if (error) {
           console.error(error);
         } else {
-          setFavorites(data[0]?.listOfSongs || []);
+          setFavorites?.(data[0]?.listOfSongs || []);
         }
       }
     };
@@ -93,40 +86,43 @@ export default function TryPage() {
     fetchFavorites();
   }, [setFavorites]);
 
+  // Update highlighted card when selected video changes
   useEffect(() => {
-    // This effect ensures that highlightedCardId is updated after selectedVideo changes
     if (selectedVideo) {
-      setHighlightedCardId(selectedVideo.id.videoId);
+      setHighlightedCardId?.(selectedVideo.id.videoId);
     }
-  }, [selectedVideo]); // Watch for changes in selectedVideo
+  }, [selectedVideo, setHighlightedCardId]);
 
-
+  // Update URL when selected video changes
   useEffect(() => {
     if (selectedVideo) {
-      setHighlightedCardId(selectedVideo.id.videoId);
-      setUrl(`https://www.youtube.com/watch?v=${selectedVideo.id.videoId}`);
+      setUrl?.(`https://www.youtube.com/watch?v=${selectedVideo.id.videoId}`);
     }
   }, [selectedVideo, setHighlightedCardId, setUrl]);
 
+  if (!resultsContext || !selectedVideoContext || !isDrawerOpenContext || !favoritesContext || !urlContext || !messageContext || !downloadProgressContext || !isDownloadingContext) {
+    return <FakeCard />; // or some other placeholder
+  }
+
   return (
     <div className="bg-custom-dark">
-      <aside className="bg-custom-dark text-base-content rounded h-[65px] w-full ">
+      <aside className="bg-custom-dark text-base-content rounded h-[65px] w-full">
         <SearchSection where={"search"} pathname={pathname} />
         <div className="bg-custom-dark w-full h-[calc(100vh-70px)] rounded-lg overflow-hidden pb-[70px] p-1">
           <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">
             <div className="">
-            {results && results.length > 0 ? (
+              {results && results.length > 0 ? (
                 <div className="flex flex-wrap gap-3">
-                  {results.map((item: any) => (
-                    <TheCard item={item} where={"try"} />
+                  {results.map((item: any, index: number) => (
+                    <TheCard key={index} item={item} where={"try"} />
                   ))}
                 </div>
               ) : (
-                  <FakeCard where={"search"}/>
+                <FakeCard where={"search"} />
               )}
               <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
                 <DrawerContent className="bg-custom-yellow h-[90%] w-[95%] left-[2.5%] p-5">
-                  <div className='bg-custom-dark w-full h-[99%] rounded-sm flex '>
+                  <div className='bg-custom-dark w-full h-[99%] rounded-sm flex'>
                     <InformationOfTheChannel />
                     <VideoDisplay />
                     <ListOfVideoOfChannel />
@@ -136,13 +132,9 @@ export default function TryPage() {
               </Drawer>
             </div>
             <ScrollBar orientation="vertical" />
-          </ScrollArea >
-        </div >
-      </aside >
-    </div >
+          </ScrollArea>
+        </div>
+      </aside>
+    </div>
   );
 }
-
-
-
-
