@@ -37,7 +37,7 @@ export default function LoginPage() {
                 setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
                 return;
             }
-            router.push('/');
+            router.push('/home');
             router.refresh();
         } catch (error) {
             console.error('Error signing in:', error);
