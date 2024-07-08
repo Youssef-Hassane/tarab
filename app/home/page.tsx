@@ -10,18 +10,17 @@ export default async function HomePage() {
 
 
 	return (
-		<main className="bg-custom-dark h-[100%] w-[100%]">
-			<div className="bg-custom-dark">
+		<main className="bg-custom-dark h-[100%] w-[100%] ">
+			<div className="bg-custom-dark h-[330px]">
 				<TopArtists />
 			</div>
 			<Separator />
-			<div className="bg-custom-dark">
+			<div className="bg-custom-dark h-[320px]">
 				<TopSongs />
 			</div>
 			<Separator />
-			<div className='p-4'>
-				<h1 className="text-2xl font-bold mb-4">My List</h1>
-				<MyList />
+			<div className='bg-custom-dark p-4 h-[350px]'>
+				<MyList where={"home"}/>
 			</div>
 
 		</main>

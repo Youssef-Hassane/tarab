@@ -56,7 +56,7 @@ export default function TryPage() {
       };
       loadDefaultMusic();
     }
-  }, [contextsAvailable, setResults]);
+  }, []);
 
   useEffect(() => {
     if (contextsAvailable) {

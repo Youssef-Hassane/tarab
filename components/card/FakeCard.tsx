@@ -43,7 +43,7 @@ export function FakeCard({where}) {
 
 export function FakeCardArtists({ where }) {
 	return (
-		<div className={`flex gap-3 p-2 ${where === 'home' ? 'justify-center' : 'flex-wrap justify-center'}`}>
+		<div className={`flex gap-3 p-2 ${where === 'home' ? 'justify-center ' : 'flex-wrap justify-center'}`}>
 			{[...Array(40)].map((_, index) => (
 				<CardSkeletonArtists key={index} />
 			))}

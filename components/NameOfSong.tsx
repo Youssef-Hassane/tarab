@@ -26,7 +26,7 @@ export default function NameOfSong({ item, where }) {
 		} else if (where === 'artists') {
 			return (
 				<h1 className={`text-[16px] ${highlightedChannelId === item.id.channelId ? 'text-custom-dark' : 'text-white'}`}>
-					{truncateText(item.snippet.title, 30)}
+					{truncateText(item.snippet.title, 17)}
 				</h1>
 			)
 		}

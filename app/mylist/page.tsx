@@ -8,13 +8,13 @@ import Image from 'next/image';
 import ReactPlayer from 'react-player';
 import { Drawer, DrawerContent, DrawerTitle, } from "@/components/ui/drawer";
 
-import { fetchDefaultMusic, fetchChannelVideos } from '../FetchData/fetchData';
+import { fetchDefaultMusic, fetchChannelVideos } from '@/utils/fetchData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import FooterSection from '@/components/footer';
 import InformationOfTheChannel from '@/components/InformationOfTheChannel';
 
 
-export default function MyList() {
+export default function MyList({where}) {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -275,11 +275,11 @@ export default function MyList() {
   }
 
   return (
-    <div className="bg-custom-dark text-base-content rounded w-full p-2">
-      <h1 className="text-2xl font-bold mb-4 p-4">My List</h1>
-      <div className="bg-custom-dark w-full h-[calc(100vh-70px)] rounded-lg overflow-hidden pb-[70px] p-1">
+    <div className="bg-custom-dark text-base-content rounded w-full pb-[70px] p-2">
+      <h1 className="text-2xl font-bold mb-4">My List</h1>
+      <div className="bg-custom-dark w-full rounded-lg overflow-hidden  p-1">
         <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">
-          <div className="flex flex-wrap gap-3">
+          <div className={`flex gap-3 ${where === 'home' ? '' : 'flex-wrap'}`}>
             {favorites && favorites.filter(video => video?.snippet?.thumbnails?.high?.url).map((video: any) => (
               <Card onClick={() => handleCardClick(video)} key={video.id}
                 className={`group z-20 w-[170px] h-auto max-h-[230px] bg-custom-dark border-none hover:bg-custom-yellow hover:text-custom-dark rounded-sm ${highlightedCardId === video.id ? 'bg-custom-yellow text-custom-dark' : ''}`}
@@ -409,7 +409,7 @@ export default function MyList() {
             </DrawerContent>
           </Drawer>
           <ScrollBar orientation="horizontal" />
-        </ScrollArea>a
+        </ScrollArea>
       </div>
     </div >
   );

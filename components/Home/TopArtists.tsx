@@ -17,7 +17,7 @@ export default function TopArtists() {
 	const isDrawerOpenContext = useContext(Context_isDrawerOpen);
 
 
-	
+
 	const { resultsChannel, setResultsChannel } = resultsContext;
 	const { isDrawerOpen, setIsDrawerOpen } = isDrawerOpenContext;
 
@@ -33,7 +33,7 @@ export default function TopArtists() {
 
 	// Check if contexts are available
 	if (!resultsContext || !isDrawerOpenContext) {
-		return <FakeCard where="Artists" />; // or some other placeholder
+		return <FakeCardArtists where="home" />;
 	}
 
 	return (
@@ -44,13 +44,13 @@ export default function TopArtists() {
 					<ScrollArea className="rounded-md bg-custom-dark w-full overflow-auto">
 						<div className="">
 							{resultsChannel && resultsChannel.length > 0 ? (
-								<div className="flex  gap-3">
+								<div className="flex  gap-3 h-[240px]">
 									{resultsChannel.map((item: any) => (
 										<TheCard item={item} where={"artists"} key={item.id} />
 									))}
 								</div>
 							) : (
-								<FakeCardArtists where={"artists"} />
+								<FakeCardArtists where={"home"} />
 							)}
 							<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
 								<DrawerContent className="bg-custom-yellow h-[90%] w-[95%] left-[2.5%] p-5">

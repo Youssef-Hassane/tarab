@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import ReactPlayer from 'react-player';
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { fetchDefaultMusic } from '../FetchData/fetchData';
+import { fetchDefaultMusic } from '@/utils/fetchData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import FooterSection from '@/components/footer';
 import {
@@ -61,7 +61,7 @@ export default function TryPage() {
     };
 
     loadDefaultMusic();
-  }, [setResults]);
+  }, []);
 
   // Fetch user's favorites from Supabase
   useEffect(() => {

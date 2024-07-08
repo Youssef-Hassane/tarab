@@ -52,6 +52,7 @@ export function SidebarDes(props: SidebarProps) {
 	const supabase = createClientComponentClient();
 	const handleLogout = async () => {
 		await supabase.auth.signOut();
+		router.push('/login');
 		router.refresh();
 		setUser(null);
 	};

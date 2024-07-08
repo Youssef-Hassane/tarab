@@ -105,7 +105,7 @@ export default function TopSongs() {
 
   // Check if contexts are available
   if (!resultsContext || !selectedVideoContext || !isDrawerOpenContext || !favoritesContext || !urlContext || !messageContext || !downloadProgressContext || !isDownloadingContext) {
-    return <FakeCard />; // or some other placeholder
+    return <FakeCard where={"home"}/>; // or some other placeholder
   }
 
   return (
@@ -122,7 +122,7 @@ export default function TopSongs() {
                   ))}
                 </div>
               ) : (
-                <FakeCard where={"search"} />
+                <FakeCard where={"home"} />
               )}
               <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
                 <DrawerContent className="bg-custom-yellow h-[90%] w-[95%] left-[2.5%] p-5">
