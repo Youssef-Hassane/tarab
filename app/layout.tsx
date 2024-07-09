@@ -13,6 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "TARAB",
   description: "Developed by Almasy Group",
+  manifest: "/manifest.json",
 };
 
 export default async function RootLayout({
