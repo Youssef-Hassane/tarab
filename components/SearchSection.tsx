@@ -144,6 +144,7 @@ export default function SearchSection({ where, pathname }) {
                 )}
             </div>
             {/* suggestions container */}
+            {isDesktop && (
             <div
                 className={`pt-2 absolute z-50 top-[49px] w-[600px] rounded-b-lg overflow-hidden -ml-[158px] transition-all duration-300 ${showSuggestions && suggestions.length > 0 ? 'h-[400px] opacity-100' : 'h-0 opacity-0'
                     } bg-gray-700`}
@@ -163,6 +164,7 @@ export default function SearchSection({ where, pathname }) {
                     <ScrollBar orientation="vertical" />
                 </ScrollArea>
             </div>
+            )}
         </div>
     )
 }

@@ -121,6 +121,7 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
                                                                                                                             <Context_showSuggestions.Provider value={{ showSuggestions, setShowSuggestions }}>
                                                                                                                                 <div className="bg-custom-dark">
                                                                                                                                     <Sidebar />
+                                                                                                                                    
                                                                                                                                     <main className="sm:ml-[270px] bg-custom-dark">
                                                                                                                                         {children}
 
