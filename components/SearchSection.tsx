@@ -121,8 +121,8 @@ export default function SearchSection({ where, pathname }) {
     }
 
     return (
-        <div ref={searchContainerRef} className={`search-container flex items-center h-full  gap-2 justify-center ${!isDesktop ? 'w-full' : 'pl-5 pr-5'}`}>
-            <div className={`flex items-center h-full  gap-2 justify-center ${!isDesktop ? 'w-full p-3' : 'pl-5 pr-5'}`}>
+        <div ref={searchContainerRef} className={`search-container relative flex items-center h-full  gap-2 justify-center ${!isDesktop ? 'w-full' : 'w-full pl-5 pr-5'}`}>
+            <div className={`flex items-center h-full  gap-2 justify-center ${!isDesktop ? 'w-full p-3' : 'w-full pl-5 pr-5'}`}>
                 <input
                     type="text"
                     placeholder="Search"
@@ -131,7 +131,7 @@ export default function SearchSection({ where, pathname }) {
                     onKeyPress={handleKeyPress}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
-                    className={`bg-gray-700 text-white text-[16px] w-[600px] h-[40px] rounded-sm p-3 focus-visible:outline-none ${!isDesktop ? 'w-full' : ''}`}
+                    className={`bg-gray-700 text-white text-[16px] max-w-[600px] h-[40px] rounded-sm p-3 focus-visible:outline-none ${!isDesktop ? 'w-full' : 'w-full'}`}
                 />
                 
                 {isDesktop && (
@@ -146,10 +146,10 @@ export default function SearchSection({ where, pathname }) {
             {/* suggestions container */}
             {isDesktop && (
             <div
-                className={`pt-2 absolute z-50 top-[49px] w-[600px] rounded-b-lg overflow-hidden -ml-[158px] transition-all duration-300 ${showSuggestions && suggestions.length > 0 ? 'h-[400px] opacity-100' : 'h-0 opacity-0'
+                className={`pt-2 absolute z-50 top-[49px] max-w-[600px] w-full rounded-b-lg overflow-hidden -ml-[158px] transition-all duration-300 ${showSuggestions && suggestions.length > 0 ? 'h-[400px] opacity-100' : 'h-0 opacity-0'
                     } bg-gray-700`}
             >
-                <ScrollArea className="absolute w-[600px] bg-gray-700 h-full z-50">
+                <ScrollArea className="absolute max-w-[600px] w-full bg-gray-700 h-full z-50">
                     <div className="p-2">
                         {suggestions && suggestions.map((suggestion, index) => (
                             <div

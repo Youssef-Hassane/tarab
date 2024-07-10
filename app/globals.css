@@ -126,3 +126,16 @@ body {
   animation: shimmer-reverse 1.5s infinite; /* Adjust duration for slower effect */
   
 }
+
+.centered-footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 70px; /* Adjust the height as needed */
+  background-color: var(--bg-custom-dark);
+  color: var(--text-base-content);
+  border-radius: var(--border-radius);
+  z-index: 50;
+}
