@@ -33,12 +33,24 @@ const sidebarItems: SidebarItems = {
 
 }
 
+const sidebarItemsMobile: SidebarItems = {
+	links: [
+		{ label: '', href: '/home', icon: Home },
+		{ label: '', href: '/search', icon: Search },
+		{ label: '', href: '/artists', icon: MicVocal },
+		{ label: '', href: '/mylist', icon: List, },
+		{ label: '', href: '/downloads', icon: CloudDownload },
+		{ label: '', href: '/item/profile', icon: User },
+	]
+}
+
+
 export function Sidebar() {
 
 	const isDesktop = useMediaQuery('(min-width: 640px)', { initializeWithValue: false });
 
 	if (!isDesktop) {
-		return (<SidebarMob sidebarItems={sidebarItems} />);
+		return (<SidebarMob sidebarItems={sidebarItemsMobile} />);
 	}
 	return (
 		<div>

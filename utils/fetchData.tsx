@@ -58,7 +58,7 @@ export const fetchDefaultChannels = async () => {
 
         const filteredChannels = searchData.filter((channel: any) => {
             const details = detailsData.find((item: any) => item.id === channel.id.channelId);
-            return details && details.statistics.subscriberCount > 1000;
+            return details && details.statistics.subscriberCount > 10000;
         });
 
         return filteredChannels;

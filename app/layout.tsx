@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: "TARAB",
   description: "Developed by Almasy Group",
   manifest: "/manifest.json",
+  icons: "/icon.png",
 };
 
 export default async function RootLayout({
@@ -28,7 +29,6 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
           rel="icon"
           href="/icon?<generated>"

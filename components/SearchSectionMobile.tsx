@@ -6,9 +6,8 @@ import { SearchForVideosFetch, SearchForChannelsFetch, FetchSuggestionsVideos, F
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import ListOfSuggestions from "./suggestions";
 import { usePathname } from 'next/navigation';
-import { useMediaQuery } from 'usehooks-ts';
 
-export default function SearchSection({ where, pathname }) {
+export default function SearchSectionMobile({ where, pathname }) {
     const queryContext = useContext(Context_query);
     const resultsContext = useContext(Context_results);
     const suggestionsContext = useContext(Context_suggestions);
@@ -24,8 +23,6 @@ export default function SearchSection({ where, pathname }) {
     const { showSuggestions, setShowSuggestions } = showSuggestionsContext;
 
     const searchContainerRef = useRef(null);
-
-    const isDesktop = useMediaQuery('(min-width: 640px)', { initializeWithValue: false });
 
     const SearchForVideos = async () => {
         const results = await SearchForVideosFetch(query);
@@ -100,7 +97,7 @@ export default function SearchSection({ where, pathname }) {
         setIsFocused(false);
         setSuggestions([]);
         setQuery('');
-    }, [pathname, setShowSuggestions, setIsFocused, setSuggestions]);
+      }, [pathname, setShowSuggestions, setIsFocused, setSuggestions]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -119,10 +116,10 @@ export default function SearchSection({ where, pathname }) {
     if (!queryContext || !resultsContext || !suggestionsContext || !isFocusedContext || !showSuggestionsContext) {
         return null;
     }
-
+    
     return (
-        <div ref={searchContainerRef} className={`search-container flex items-center h-full  gap-2 justify-center ${!isDesktop ? 'w-full' : 'pl-5 pr-5'}`}>
-            <div className={`flex items-center h-full  gap-2 justify-center ${!isDesktop ? 'w-full p-3' : 'pl-5 pr-5'}`}>
+        <div ref={searchContainerRef} className="search-container flex items-center h-full pl-5 pr-5 gap-2 justify-center">
+            <div className="flex items-center h-full pl-5 pr-5 gap-2 justify-center">
                 <input
                     type="text"
                     placeholder="Search"
@@ -131,22 +128,20 @@ export default function SearchSection({ where, pathname }) {
                     onKeyPress={handleKeyPress}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
-                    className={`bg-gray-700 text-white text-[16px] w-[600px] h-[40px] rounded-sm p-3 focus-visible:outline-none ${!isDesktop ? 'w-full' : ''}`}
+                    className="bg-gray-700 text-white text-[16px] w-[600px] h-[40px] rounded-sm p-3 focus-visible:outline-none"
                 />
-                
-                {isDesktop && (
-                    <Button
-                        onClick={handleSearch}
-                        className="bg-custom-yellow text-custom-dark hover:text-custom-yellow w-[150px]"
-                    >
-                        Search
-                    </Button>
-                )}
+                <Button
+                    onClick={handleSearch}
+                    className="bg-custom-yellow text-custom-dark hover:text-custom-yellow w-[150px]"
+                >
+                    Search
+                </Button>
             </div>
             {/* suggestions container */}
             <div
-                className={`pt-2 absolute z-50 top-[49px] w-[600px] rounded-b-lg overflow-hidden -ml-[158px] transition-all duration-300 ${showSuggestions && suggestions.length > 0 ? 'h-[400px] opacity-100' : 'h-0 opacity-0'
-                    } bg-gray-700`}
+                className={`pt-2 absolute z-50 top-[49px] w-[600px] rounded-b-lg overflow-hidden -ml-[158px] transition-all duration-300 ${
+                    showSuggestions && suggestions.length > 0 ? 'h-[400px] opacity-100' : 'h-0 opacity-0'
+                } bg-gray-700`}
             >
                 <ScrollArea className="absolute w-[600px] bg-gray-700 h-full z-50">
                     <div className="p-2">
