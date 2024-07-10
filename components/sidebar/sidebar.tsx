@@ -30,7 +30,6 @@ const sidebarItems: SidebarItems = {
 			</SidebarButton>
 		</div>
 	),
-
 }
 
 const sidebarItemsMobile: SidebarItems = {
@@ -40,7 +39,7 @@ const sidebarItemsMobile: SidebarItems = {
 		{ href: '/artists', icon: MicVocal },
 		{ href: '/mylist', icon: List, },
 		{ href: '/downloads', icon: CloudDownload },
-		{ href: '/item/profile', icon: User },
+		
 	]
 }
 

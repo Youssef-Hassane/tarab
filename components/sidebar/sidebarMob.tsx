@@ -27,7 +27,7 @@ export function SidebarMob(props: SidebarMobileProps) {
   return (
     <Sheet >
 
-      <div className='fixed bottom-[25px] bg-custom-dark w-full z-50'>
+      <div className='fixed -bottom-[18px] bg-custom-dark w-full h-[100px] z-50 '>
       <Separator />
 
         <div className='flex justify-between items-center py-1 px-1'>

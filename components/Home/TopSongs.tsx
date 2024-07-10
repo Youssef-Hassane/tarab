@@ -17,7 +17,8 @@ import {
   Context_url,
   Context_message,
   Context_downloadProgress,
-  Context_isDownloading
+  Context_isDownloading,
+  Context_isDesktop
 } from '@/app/home';
 import VideoDisplay from '@/components/VideoDisplay';
 import ListOfVideoOfChannel from '@/components/ListOfVideoOfChannel';
@@ -32,6 +33,9 @@ import { usePathname } from 'next/navigation';
 
 
 export default function TopSongs() {
+  const isDesktopContext = useContext(Context_isDesktop);
+	const isDesktop = isDesktopContext;
+
   const resultsContext = useContext(Context_results_Songs);
   const selectedVideoContext = useContext(Context_selectedVideo);
   const isDrawerOpenContext = useContext(Context_isDrawerOpen);
@@ -111,14 +115,18 @@ export default function TopSongs() {
   return (
     <div className="bg-custom-dark p-4">
       <h1 className="text-2xl font-bold mb-4">Top Songs</h1>
-      <aside className="bg-custom-dark text-base-content rounded w-full ">
+      <aside className="bg-custom-dark text-base-content w-full ">
         <div className="bg-custom-dark w-full rounded-lg overflow-hidden p-1">
           <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">
             <div className="">
               {resultsSong && resultsSong.length > 0 ? (
-                <div className="flex gap-3">
+								<div className={`${isDesktop ? "flex gap-3 h-[240px]" : "grid grid-cols-13 gap-1 w-[2700px] h-[250px]"}`}>
                   {resultsSong.map((item: any) => (
-                    <TheCard item={item} where={"try"} key={item.id.videoId} />
+                    
+                    <div className=''>
+											{isDesktop ? (<TheCard item={item} where={"try"} key={item.id.videoId} />) : (<TheCard item={item} where={"MobileTry"} key={item.id.videoId} />)}
+
+										</div>
                   ))}
                 </div>
               ) : (

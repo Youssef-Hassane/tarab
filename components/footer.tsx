@@ -110,7 +110,7 @@ export default function FooterSection({ inDrawer = false }) {
     return (
         <div className={`${inDrawer
             ? 'bg-custom-dark text-base-content rounded h-[65px] fixed bottom-[40px] w-[95%] left-[2.5%]'
-            : `bg-custom-dark text-base-content rounded h-[70px] w-screen fixed bottom-0 left-0 z-50 ${isDesktop ? '' : 'bg-custom-dark text-base-content rounded h-[65px] fixed bottom-[89px] w-[calc(100%-10px)] mx-[5px] border-gray-700 border-2 border-opacity-80'}`
+            : `bg-custom-dark text-base-content rounded h-[70px]  fixed bottom-0 left-0 z-50 ${isDesktop ? 'w-screen' : 'bg-custom-dark text-base-content rounded h-[65px] fixed bottom-[89px] w-[calc(100%-10px)] mx-[5px] border-gray-700 border-2 border-opacity-80'}`
             } 
           `}>
             <ProgressBar played={played} onSeek={handleSeek} />

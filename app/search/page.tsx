@@ -17,7 +17,8 @@ import {
   Context_url,
   Context_message,
   Context_downloadProgress,
-  Context_isDownloading
+  Context_isDownloading,
+  Context_isDesktop
 } from '../home';
 import VideoDisplay from '@/components/VideoDisplay';
 import ListOfVideoOfChannel from '@/components/ListOfVideoOfChannel';
@@ -29,6 +30,9 @@ import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
 
 export default function TryPage() {
+  const isDesktopContext = useContext(Context_isDesktop);
+	const isDesktop = isDesktopContext;
+
   // Always call hooks at the top level
   const resultsContext = useContext(Context_results);
   const selectedVideoContext = useContext(Context_selectedVideo);
@@ -106,15 +110,18 @@ export default function TryPage() {
 
   return (
     <div className="bg-custom-dark">
-      <aside className="bg-custom-dark text-base-content rounded h-[65px] w-full">
+      <aside className="bg-custom-dark text-base-content  h-[65px] w-full">
         <SearchSection where={"search"} pathname={pathname} />
-        <div className="bg-custom-dark w-full h-[calc(100vh-70px)] rounded-lg overflow-hidden pb-[70px] p-1">
-          <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">
+        <div className="bg-custom-dark w-full h-[calc(100vh-70px)] overflow-hidden pb-[70px] p-1">
+          <ScrollArea className=" bg-custom-dark w-full h-full overflow-auto">
             <div className="">
               {results && results.length > 0 ? (
-                <div className="flex flex-wrap gap-3">
+								<div className={`${isDesktop ? "flex gap-3 h-[240px]" : "grid grid-cols-2 gap-1"}`}>
                   {results.map((item: any, index: number) => (
-                    <TheCard key={index} item={item} where={"try"} />
+                    <div className=''>
+                    {isDesktop ? (<TheCard item={item} where={"try"} key={item.id.videoId} />) : (<TheCard item={item} where={"MobileTry"} key={item.id.videoId} />)}
+
+                  </div>
                   ))}
                 </div>
               ) : (

@@ -6,6 +6,7 @@ import React from 'react';
 
 
 import HomePage from "./home/page";
+import Loading from './loading';
 
 
 
@@ -21,8 +22,8 @@ export default async function Home() {
   }
 
   return (
-  
-      <HomePage />
-    
+
+    <HomePage />
+
   );
 }

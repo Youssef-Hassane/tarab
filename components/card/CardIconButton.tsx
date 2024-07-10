@@ -56,7 +56,7 @@ export default function CardIconButton({ item, where }) {
 	const handleClick = (item, where) => {
 		if (where === "try") {
 			return handleCardClickIcon(item);
-		} else if (where === "artists") {
+		} else if (where === "artists" || where === "Mobile") {
 			return handleCardClickIconArtists(item);
 		}
 	};
@@ -64,7 +64,7 @@ export default function CardIconButton({ item, where }) {
 	const getCardClassName = (item, where) => {
 		if (where === "try") {
 			return `button-icon bg-custom-yellow rounded-full w-[50px] h-[50px] absolute bottom-[-60px] right-1 flex items-center justify-center opacity-0 transition-all duration-300 ease-in-out group-hover:bottom-1 group-hover:opacity-100 shadow-xl z-50 ${highlightedCardId === item.id.videoId ? 'bg-custom-yellow text-custom-dark bottom-1 opacity-100' : ''}`;
-		} else if (where === "artists") {
+		} else if (where === "artists" || where === "Mobile") {
 			return `button-icon bg-custom-yellow rounded-full w-[50px] h-[50px] absolute bottom-[-60px] right-1 flex items-center justify-center opacity-0 transition-all duration-300 ease-in-out group-hover:bottom-1 group-hover:opacity-100 shadow-xl z-50 ${highlightedChannelId === item.id.channelId ? 'bg-custom-yellow text-custom-dark bottom-1 opacity-100' : ''}`;
 		}
 	};
@@ -81,7 +81,7 @@ export default function CardIconButton({ item, where }) {
 					)}
 				</div>
 			);
-		} else if (where === "artists") {
+		} else if (where === "artists" || where === "Mobile") {
 
 			return (
 				<div>

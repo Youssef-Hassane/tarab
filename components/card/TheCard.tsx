@@ -1,7 +1,7 @@
 import CardHeaderInfo from "@/components/card/CardHeader";
 import CardInformation from "@/components/card/CardInformation";
 import Card from "@/components/ui/card";
-import { Context_highlightedChannelId, Context_selectedVideo, Context_isDrawerOpen, Context_playing, Context_channelVideos, Context_highlightedCardId } from "../../app/home";
+import { Context_isDesktop, Context_highlightedChannelId, Context_selectedVideo, Context_isDrawerOpen, Context_playing, Context_channelVideos, Context_highlightedCardId } from "../../app/home";
 import { useContext } from "react";
 import { fetchChannelVideos } from "@/utils/fetchData";
 
@@ -72,9 +72,9 @@ export default function TheCard({ item, where }) {
 	};
 
 	const handleClick = (item, where) => {
-		if (where === "try") {
+		if (where === "try" || where === "MobileTry") {
 			return () => handleCardClick(item);
-		} else if (where === "artists") {
+		} else if (where === "artists" || where === "Mobile") {
 			return () => handleCardClickArtist(item);
 		} else if (where === "mylist") {
 			return () => handleCardClickMylist(item);
@@ -82,9 +82,9 @@ export default function TheCard({ item, where }) {
 	};
 
 	const getCardKey = (item, where) => {
-		if (where === "try") {
+		if (where === "try" || where === "MobileTry") {
 			return item.id.videoId;
-		} else if (where === "artists") {
+		} else if (where === "artists" || where === "Mobile") {
 			return item.id.channelId;
 		} else if (where === "mylist") {
 			return item.id;
@@ -98,8 +98,15 @@ export default function TheCard({ item, where }) {
 			return `group w-[170px] h-auto max-h-[230px] bg-custom-dark border-none hover:bg-custom-yellow hover:text-custom-dark rounded-sm ${highlightedChannelId === item.id.channelId ? 'bg-custom-yellow text-custom-dark' : ''}`;
 		} else if (where === "mylist") {
 			return `group z-20 w-[170px] h-auto max-h-[230px] bg-custom-dark border-none hover:bg-custom-yellow hover:text-custom-dark rounded-sm ${highlightedCardId === item.id ? 'bg-custom-yellow text-custom-dark' : ''}`;
+		} else if (where === "Mobile") {
+			return `group w-auto h-auto max-h-[230px] bg-custom-dark border-[1px] border-gray-700 hover:bg-custom-yellow hover:text-custom-dark rounded-sm ${highlightedChannelId === item.id.channelId ? 'bg-custom-yellow text-custom-dark' : ''}`;
+		} else if (where === "MobileTry") {
+			return `group w-auto h-auto max-h-[230px] bg-custom-dark border-[1px] border-gray-700 hover:bg-custom-yellow hover:text-custom-dark rounded-sm ${highlightedCardId === item.id.videoId ? 'bg-custom-yellow text-custom-dark' : ''}`;
 		}
 	};
+
+	const isDesktopContext = useContext(Context_isDesktop);
+	const isDesktop = isDesktopContext;
 
 	return (
 		<Card
@@ -107,9 +114,10 @@ export default function TheCard({ item, where }) {
 			onClick={handleClick(item, where)}
 			className={getCardClassName(item, where)}
 		>
-			<div className="p-2">
+			<div className={`p-2 ${isDesktop ? 'flex flex-col' : 'flex flex-row gap-2'}`}>
 				<CardHeaderInfo item={item} where={where} />
 				<CardInformation item={item} where={where} />
+				
 			</div>
 		</Card>
 	);

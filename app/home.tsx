@@ -9,7 +9,11 @@ import VideoPlayer from "@/components/videoPlayer";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { redirect, useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
+import { useMediaQuery } from "usehooks-ts";
+import Image from "next/image";
 
+// Create the isDesktop context
+export const Context_isDesktop = createContext<boolean | null>(null);
 
 // Create contexts
 export const Context_query = createContext(null);
@@ -45,6 +49,13 @@ export const Context_error = createContext(null);
 export const Context_router = createContext(null);
 export const Context_user = createContext(null);
 export const Context_loading = createContext(null);
+
+
+
+function useIsDesktop() {
+    const isDesktop = useMediaQuery('(min-width: 640px)', { initializeWithValue: false });
+    return isDesktop;
+}
 
 
 export default function HomePage({ children }: { children: React.ReactNode }) {
@@ -84,7 +95,8 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
 
 
 
-
+    // Custom hook for isDesktop
+    const isDesktop = useIsDesktop();
 
 
 
@@ -119,18 +131,32 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
                                                                                                                     <Context_suggestions.Provider value={{ suggestions, setSuggestions }}>
                                                                                                                         <Context_isFocused.Provider value={{ isFocused, setIsFocused }}>
                                                                                                                             <Context_showSuggestions.Provider value={{ showSuggestions, setShowSuggestions }}>
-                                                                                                                                <div className="bg-custom-dark">
-                                                                                                                                    <Sidebar />
-                                                                                                                                    
-                                                                                                                                    <main className="sm:ml-[270px] bg-custom-dark">
-                                                                                                                                        {children}
+                                                                                                                                <Context_isDesktop.Provider value={isDesktop}>
+                                                                                                                                    <div className="bg-custom-dark">
+                                                                                                                                        {isDesktop ? null :
+                                                                                                                                            <div className="pt-3">
+                                                                                                                                                <Image
+                                                                                                                                                    src="/logo-text.png"
+                                                                                                                                                    alt="logo"
+                                                                                                                                                    className='mx-3'
+                                                                                                                                                    width={100}
+                                                                                                                                                    height={100}
+                                                                                                                                                    priority
+                                                                                                                                                />
+                                                                                                                                            </div>}
 
-                                                                                                                                    </main>
+                                                                                                                                        <Sidebar />
+
+                                                                                                                                        <main className="sm:ml-[270px] bg-custom-dark">
+                                                                                                                                            {children}
+
+                                                                                                                                        </main>
 
 
-                                                                                                                                    <FooterSection />
-                                                                                                                                    <VideoPlayer />
-                                                                                                                                </div>
+                                                                                                                                        <FooterSection />
+                                                                                                                                        <VideoPlayer />
+                                                                                                                                    </div>
+                                                                                                                                </Context_isDesktop.Provider>
                                                                                                                             </Context_showSuggestions.Provider>
                                                                                                                         </Context_isFocused.Provider>
                                                                                                                     </Context_suggestions.Provider>

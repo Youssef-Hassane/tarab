@@ -43,15 +43,12 @@ export default function TopArtists() {
 			<h1 className="text-2xl font-bold mb-4">Top Artists</h1>
 			<aside className="bg-custom-dark text-base-content rounded w-full ">
 				<div className="bg-custom-dark w-full rounded-lg overflow-hidden p-1">
-					<ScrollArea className=" bg-custom-dark w-full overflow-auto">
+					<ScrollArea className="rounded-md bg-custom-dark w-full overflow-auto">
 						<div className="">
 							{resultsChannel && resultsChannel.length > 0 ? (
-								<div className={`${isDesktop ? "flex gap-3 h-[240px]" : "grid grid-cols-10 gap-1 w-[1800px]"}`}>
+								<div className="flex gap-3 h-[240px]">
 									{resultsChannel.map((item: any) => (
-										<div className=''>
-											{isDesktop ? (<TheCard item={item} where={"artists"} key={item.id} />) : (<TheCard item={item} where={"Mobile"} key={item.id} />)}
-
-										</div>
+										<TheCard item={item} where={"artists"} key={item.id} />
 									))}
 								</div>
 							) : (
