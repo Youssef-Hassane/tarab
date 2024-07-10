@@ -121,18 +121,17 @@ export default function FooterSection({ inDrawer = false }) {
                 <div>
                     {selectedVideo && selectedVideo.snippet && (
                         <>
-                        {isDesktop && (
-                            <h1 className="text-white text-[16px] group-hover:text-custom-dark">{selectedVideo.snippet.title}</h1>
-                        )}
-                        <h1 className="text-white text-[16px] group-hover:text-custom-dark">{truncateText(selectedVideo.snippet.title, 30)}</h1>
+                            {isDesktop ? (
+                                <h1 className="text-white text-[16px] group-hover:text-custom-dark">{selectedVideo.snippet.title}</h1>
+                            ) : (
+                                <h1 className="text-white text-[14px] group-hover:text-custom-dark">{truncateText(selectedVideo.snippet.title, 40)}</h1>)}
                             <h1 className="text-gray-500 text-[12px]">
                                 {selectedVideo.snippet.channelTitle}
-                                
                             </h1>
                         </>
                     )}
                 </div>
-                {isDesktop && (
+                {isDesktop ? (
                     <div>
                         <div className="flex gap-3 absolute left-1/2 transform -translate-x-1/2">
                             <Button onClick={handleShuffleClick} className={`group bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]`}>
@@ -170,10 +169,11 @@ export default function FooterSection({ inDrawer = false }) {
                             </Button>
                         </div>
                     </div>
-                )}
-                <Button onClick={() => setPlaying(!playing)} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
-                    {playing ? <Pause size={24} /> : <Play size={24} />}
-                </Button>
+                ) : (
+                    <Button onClick={() => setPlaying(!playing)} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
+                        {playing ? <Pause size={24} /> : <Play size={24} />}
+                    </Button>)
+                }
             </div>
         </div>
     );

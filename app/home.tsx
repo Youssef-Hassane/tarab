@@ -11,6 +11,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
 import { useMediaQuery } from "usehooks-ts";
 import Image from "next/image";
+import AllContextsProvider from "@/components/AllContextsProvider";
 
 // Create the isDesktop context
 export const Context_isDesktop = createContext<boolean | null>(null);
@@ -100,93 +101,63 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
 
 
 
+    const contexts = [
+        [Context_user, { user, setUser }],
+        [Context_email, { email, setEmail }],
+        [Context_password, { password, setPassword }],
+        [Context_error, { error, setError }],
+        [Context_loading, { loading, setLoading }],
+        [Context_query, { query, setQuery }],
+        [Context_results, { results, setResults }],
+        [Context_results_Songs, { resultsSong, setResultsSong }],
+        [Context_results_Channels, { resultsChannel, setResultsChannel }],
+        [Context_selectedVideo, { selectedVideo, setSelectedVideo }],
+        [Context_channelVideos, { channelVideos, setChannelVideos }],
+        [Context_isDrawerOpen, { isDrawerOpen, setIsDrawerOpen }],
+        [Context_playing, { playing, setPlaying }],
+        [Context_volume, { volume, setVolume }],
+        [Context_oldVolume, { oldVolume, setOldVolume }],
+        [Context_played, { played, setPlayed }],
+        [Context_playerRefs,  playerRefs ],
+        [Context_highlightedCardId, { highlightedCardId, setHighlightedCardId }],
+        [Context_shuffle, { shuffle, setShuffle }],
+        [Context_repeatMode, { repeatMode, setRepeatMode }],
+        [Context_favorites, { favorites, setFavorites }],
+        [Context_url, { url, setUrl }],
+        [Context_message, { message, setMessage }],
+        [Context_downloadProgress, { downloadProgress, setDownloadProgress }],
+        [Context_isDownloading, { isDownloading, setIsDownloading }],
+        [Context_highlightedChannelId, { highlightedChannelId, setHighlightedChannelId }],
+        [Context_downloadedVideos, { downloadedVideos, setDownloadedVideos }],
+        [Context_suggestions, { suggestions, setSuggestions }],
+        [Context_isFocused, { isFocused, setIsFocused }],
+        [Context_showSuggestions, { showSuggestions, setShowSuggestions }],
+        [Context_isDesktop,  isDesktop ],
+    ];
+
     return (
-        <Context_user.Provider value={{ user, setUser }}>
-            <Context_email.Provider value={{ email, setEmail }}>
-                <Context_password.Provider value={{ password, setPassword }}>
-                    <Context_error.Provider value={{ error, setError }}>
-                        <Context_loading.Provider value={{ loading, setLoading }}>
-                            <Context_query.Provider value={{ query, setQuery }}>
-                                <Context_results.Provider value={{ results, setResults }}>
-                                    <Context_results_Songs.Provider value={{ resultsSong, setResultsSong }}>
-                                        <Context_results_Channels.Provider value={{ resultsChannel, setResultsChannel }}>
-                                            <Context_selectedVideo.Provider value={{ selectedVideo, setSelectedVideo }}>
-                                                <Context_channelVideos.Provider value={{ channelVideos, setChannelVideos }}>
-                                                    <Context_isDrawerOpen.Provider value={{ isDrawerOpen, setIsDrawerOpen }}>
-                                                        <Context_playing.Provider value={{ playing, setPlaying }}>
-                                                            <Context_volume.Provider value={{ volume, setVolume }}>
-                                                                <Context_oldVolume.Provider value={{ oldVolume, setOldVolume }}>
-                                                                    <Context_played.Provider value={{ played, setPlayed }}>
-                                                                        <Context_playerRefs.Provider value={playerRefs}>
-                                                                            <Context_highlightedCardId.Provider value={{ highlightedCardId, setHighlightedCardId }}>
-                                                                                <Context_shuffle.Provider value={{ shuffle, setShuffle }}>
-                                                                                    <Context_repeatMode.Provider value={{ repeatMode, setRepeatMode }}>
-                                                                                        <Context_favorites.Provider value={{ favorites, setFavorites }}>
-                                                                                            <Context_url.Provider value={{ url, setUrl }}>
-                                                                                                <Context_message.Provider value={{ message, setMessage }}>
-                                                                                                    <Context_downloadProgress.Provider value={{ downloadProgress, setDownloadProgress }}>
-                                                                                                        <Context_isDownloading.Provider value={{ isDownloading, setIsDownloading }}>
-                                                                                                            <Context_highlightedChannelId.Provider value={{ highlightedChannelId, setHighlightedChannelId }}>
-                                                                                                                <Context_downloadedVideos.Provider value={{ downloadedVideos, setDownloadedVideos }}>
-                                                                                                                    <Context_suggestions.Provider value={{ suggestions, setSuggestions }}>
-                                                                                                                        <Context_isFocused.Provider value={{ isFocused, setIsFocused }}>
-                                                                                                                            <Context_showSuggestions.Provider value={{ showSuggestions, setShowSuggestions }}>
-                                                                                                                                <Context_isDesktop.Provider value={isDesktop}>
-                                                                                                                                    <div className="bg-custom-dark">
-                                                                                                                                        {isDesktop ? null :
-                                                                                                                                            <div className="pt-3">
-                                                                                                                                                <Image
-                                                                                                                                                    src="/logo-text.png"
-                                                                                                                                                    alt="logo"
-                                                                                                                                                    className='mx-3'
-                                                                                                                                                    width={100}
-                                                                                                                                                    height={100}
-                                                                                                                                                    priority
-                                                                                                                                                />
-                                                                                                                                            </div>}
+        <AllContextsProvider contexts={contexts}>
+            <div className="bg-custom-dark">
 
-                                                                                                                                        <Sidebar />
+                {isDesktop ? null :
+                    <div className="pt-3 fixed top-0 bg-custom-dark w-full h-full">
+                        <Image src="/logo-text.png" alt="logo" className='mx-3' width={100} height={100} priority />
+                    </div>
+                }
 
-                                                                                                                                        <main className="sm:ml-[270px] bg-custom-dark">
-                                                                                                                                            {children}
+                <Sidebar />
 
-                                                                                                                                        </main>
+                <main className={`sm:ml-[270px] bg-custom-dark ${isDesktop ? '' : 'mt-[45px]'} fixed top-0 left-0 w-full h-full overflow-auto`}>
+                    <div className="relative"> 
+                        {children}
+                    </div>
+                </main>
 
+                <FooterSection />
+                <VideoPlayer />
+            </div>
+        </AllContextsProvider>
 
-                                                                                                                                        <FooterSection />
-                                                                                                                                        <VideoPlayer />
-                                                                                                                                    </div>
-                                                                                                                                </Context_isDesktop.Provider>
-                                                                                                                            </Context_showSuggestions.Provider>
-                                                                                                                        </Context_isFocused.Provider>
-                                                                                                                    </Context_suggestions.Provider>
-                                                                                                                </Context_downloadedVideos.Provider>
-                                                                                                            </Context_highlightedChannelId.Provider>
-                                                                                                        </Context_isDownloading.Provider>
-                                                                                                    </Context_downloadProgress.Provider>
-                                                                                                </Context_message.Provider>
-                                                                                            </Context_url.Provider>
-                                                                                        </Context_favorites.Provider>
-                                                                                    </Context_repeatMode.Provider>
-                                                                                </Context_shuffle.Provider>
-                                                                            </Context_highlightedCardId.Provider>
-                                                                        </Context_playerRefs.Provider>
-                                                                    </Context_played.Provider>
-                                                                </Context_oldVolume.Provider>
-                                                            </Context_volume.Provider>
-                                                        </Context_playing.Provider>
-                                                    </Context_isDrawerOpen.Provider>
-                                                </Context_channelVideos.Provider>
-                                            </Context_selectedVideo.Provider>
-                                        </Context_results_Channels.Provider>
-                                    </Context_results_Songs.Provider>
-                                </Context_results.Provider>
-                            </Context_query.Provider>
-                        </Context_loading.Provider>
-                    </Context_error.Provider>
-                </Context_password.Provider>
-            </Context_email.Provider>
-        </Context_user.Provider>
 
     );
 }
