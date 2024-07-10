@@ -26,7 +26,7 @@ export function SidebarMob(props: SidebarMobileProps) {
 
   return (
     <Sheet >
-        <div className='fixed bottom-0 bg-red-500 w-full'>
+        <div className='fixed bottom-[20px] bg-red-500 w-full'>
           <div className='flex w-full gap-2 justify-between'>
             {props.sidebarItems.links.map((link, idx) => (
               <Link key={idx} href={link.href}>
