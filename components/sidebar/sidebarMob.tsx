@@ -26,22 +26,25 @@ export function SidebarMob(props: SidebarMobileProps) {
 
   return (
     <Sheet >
-        <div className='fixed bottom-[20px] bg-red-500 w-full'>
-          <div className='flex w-full gap-2 justify-between'>
-            {props.sidebarItems.links.map((link, idx) => (
-              <Link key={idx} href={link.href}>
-                <SidebarButton
-                  variant={pathname === link.href ? 'secondary' : 'ghost' }
-                  icon={link.icon}
-                  className='w-full h-full hover:bg-custom-yellow flex flex-col'
-                >
-                  {link.label}
-                </SidebarButton>
-              </Link>
-            ))}
-            {props.sidebarItems.extras}
-          </div>
+
+      <div className='fixed bottom-[25px] bg-custom-dark w-full z-50'>
+      <Separator />
+
+        <div className='flex justify-between items-center py-1 px-1'>
+          {props.sidebarItems.links.map((link, idx) => (
+            <Link key={idx} href={link.href}>
+              <SidebarButton
+                variant={pathname === link.href ? 'secondary' : 'ghost'}
+                icon={link.icon}
+                className=' h-[50px] hover:bg-custom-yellow flex flex-col rounded-[100%] justify-center items-center gap-0'
+              >
+
+              </SidebarButton>
+            </Link>
+          ))}
+
         </div>
+      </div>
     </Sheet>
   );
 };

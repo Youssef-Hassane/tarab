@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export interface SidebarItems {
 	links: Array<{
-		label: string;
+		label?: string;
 		href: string;
 		icon?: LucideIcon;
 	}>;

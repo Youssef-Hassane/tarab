@@ -35,12 +35,12 @@ const sidebarItems: SidebarItems = {
 
 const sidebarItemsMobile: SidebarItems = {
 	links: [
-		{ label: '', href: '/home', icon: Home },
-		{ label: '', href: '/search', icon: Search },
-		{ label: '', href: '/artists', icon: MicVocal },
-		{ label: '', href: '/mylist', icon: List, },
-		{ label: '', href: '/downloads', icon: CloudDownload },
-		{ label: '', href: '/item/profile', icon: User },
+		{ href: '/home', icon: Home },
+		{ href: '/search', icon: Search },
+		{ href: '/artists', icon: MicVocal },
+		{ href: '/mylist', icon: List, },
+		{ href: '/downloads', icon: CloudDownload },
+		{ href: '/item/profile', icon: User },
 	]
 }
 
