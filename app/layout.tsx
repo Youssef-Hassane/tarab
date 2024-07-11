@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import React from 'react'; // Add this line
+import React from 'react';
 import HomePage from "./home";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -41,14 +41,16 @@ export default async function RootLayout({
           type="image/<generated>"
           sizes="<generated>"
         />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
       </head>
       <body className={inter.className}>
         {user ? (
-          <>
-            <HomePage>
-              {children}
-            </HomePage>
-          </>
+          <HomePage>
+            {children}
+          </HomePage>
         ) : (
           <main>{children}</main>
         )}
