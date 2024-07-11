@@ -54,7 +54,7 @@ export function Sidebar() {
 	return (
 		<div>
 			<SidebarDes sidebarItems={sidebarItems} />
-			<SidebarDes sidebarItems={sidebarItems} />
+			
 		</div>
 
 	);

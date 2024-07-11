@@ -12,6 +12,8 @@ import { User } from '@supabase/supabase-js';
 import { useMediaQuery } from "usehooks-ts";
 import Image from "next/image";
 import AllContextsProvider from "@/components/AllContextsProvider";
+import styles from './HomePage.module.css'; // Import CSS module
+
 
 // Create the isDesktop context
 export const Context_isDesktop = createContext<boolean | null>(null);
@@ -118,7 +120,7 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
         [Context_volume, { volume, setVolume }],
         [Context_oldVolume, { oldVolume, setOldVolume }],
         [Context_played, { played, setPlayed }],
-        [Context_playerRefs,  playerRefs ],
+        [Context_playerRefs, playerRefs],
         [Context_highlightedCardId, { highlightedCardId, setHighlightedCardId }],
         [Context_shuffle, { shuffle, setShuffle }],
         [Context_repeatMode, { repeatMode, setRepeatMode }],
@@ -132,7 +134,7 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
         [Context_suggestions, { suggestions, setSuggestions }],
         [Context_isFocused, { isFocused, setIsFocused }],
         [Context_showSuggestions, { showSuggestions, setShowSuggestions }],
-        [Context_isDesktop,  isDesktop ],
+        [Context_isDesktop, isDesktop],
     ];
 
     return (
@@ -147,8 +149,8 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
 
                 <Sidebar />
 
-                <main className={`sm:ml-[270px] bg-custom-dark ${isDesktop ? '' : 'mt-[45px]'} fixed top-0 left-0 w-full h-full`}>
-                    <div className="content-container h-full overflow-auto"> 
+                <main className={`sm:ml-[270px] bg-custom-dark ${isDesktop ? '' : 'mt-[45px]'} fixedMain`}>
+                    <div className="contentContainer">
                         {children}
                     </div>
                 </main>
@@ -157,7 +159,5 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
                 <VideoPlayer />
             </div>
         </AllContextsProvider>
-
-
     );
 }

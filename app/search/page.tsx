@@ -31,7 +31,7 @@ import { usePathname } from 'next/navigation';
 
 export default function TryPage() {
   const isDesktopContext = useContext(Context_isDesktop);
-	const isDesktop = isDesktopContext;
+  const isDesktop = isDesktopContext;
 
   // Always call hooks at the top level
   const resultsContext = useContext(Context_results);
@@ -110,18 +110,18 @@ export default function TryPage() {
 
   return (
     <div className="bg-custom-dark">
-      <aside className="bg-custom-dark text-base-content  h-[65px] w-full">
+      <aside className="bg-custom-dark text-base-content h-[65px]">
         <SearchSection where={"search"} pathname={pathname} />
-        <div className="bg-custom-dark w-full h-[calc(100vh-70px)] overflow-hidden pb-[70px] p-1">
-          <ScrollArea className=" bg-custom-dark w-full h-full overflow-auto">
+        <div className="bg-custom-dark h-[calc(100vh-70px)] pb-[70px] p-1">
+          <ScrollArea className="bg-custom-dark h-full overflow-hidden">
             <div className="">
               {results && results.length > 0 ? (
-								<div className={`${isDesktop ? "flex flex-wrap gap-3 h-[240px]" : "grid grid-cols-2 gap-1"}`}>
+                <div className={`${isDesktop ? "flex flex-wrap gap-3 w-full" : "grid grid-cols-2 gap-1"}`}>
                   {results.map((item: any, index: number) => (
                     <div className=''>
-                    {isDesktop ? (<TheCard item={item} where={"try"} key={item.id.videoId} />) : (<TheCard item={item} where={"MobileTry"} key={item.id.videoId} />)}
+                      {isDesktop ? (<TheCard item={item} where={"try"} key={item.id.videoId} />) : (<TheCard item={item} where={"MobileTry"} key={item.id.videoId} />)}
 
-                  </div>
+                    </div>
                   ))}
                 </div>
               ) : (

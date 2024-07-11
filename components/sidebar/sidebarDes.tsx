@@ -59,7 +59,7 @@ export function SidebarDes(props: SidebarProps) {
 
 
 	return (
-		<aside className="bg-custom-dark h-screen w-[270px] max-w-xs fixed left-0 top-0 border-r mb-[70px]">
+		<aside className="bg-custom-dark h-screen w-[270px] max-w-xs fixed left-0 top-0 border-r mb-[70px] z-50">
 			<div className="h-full px-3 py-4 ">
 				
 				<Image
