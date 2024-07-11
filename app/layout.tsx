@@ -7,7 +7,6 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import React from 'react';
 import HomePage from "./home";
-import Head from 'next/head'; // Import Head from next/head
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +28,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
+      <head>
         <link
           rel="icon"
           href="/icon?<generated>"
@@ -46,7 +45,7 @@ export default async function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
-      </Head>
+      </head>
       <body className={inter.className}>
         {user ? (
           <HomePage>
