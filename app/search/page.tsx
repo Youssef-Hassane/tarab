@@ -116,7 +116,7 @@ export default function TryPage() {
           <ScrollArea className=" bg-custom-dark w-full h-full overflow-auto">
             <div className="">
               {results && results.length > 0 ? (
-								<div className={`${isDesktop ? "flex gap-3 h-[240px]" : "grid grid-cols-2 gap-1"}`}>
+								<div className={`${isDesktop ? "flex flex-wrap gap-3 h-[240px]" : "grid grid-cols-2 gap-1"}`}>
                   {results.map((item: any, index: number) => (
                     <div className=''>
                     {isDesktop ? (<TheCard item={item} where={"try"} key={item.id.videoId} />) : (<TheCard item={item} where={"MobileTry"} key={item.id.videoId} />)}

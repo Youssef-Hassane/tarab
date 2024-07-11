@@ -147,8 +147,8 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
 
                 <Sidebar />
 
-                <main className={`sm:ml-[270px] bg-custom-dark ${isDesktop ? '' : 'mt-[45px]'} fixed top-0 left-0 w-full h-full overflow-auto`}>
-                    <div className="relative"> 
+                <main className={`sm:ml-[270px] bg-custom-dark ${isDesktop ? '' : 'mt-[45px]'} fixed top-0 left-0 w-full h-full`}>
+                    <div className="content-container h-full overflow-auto"> 
                         {children}
                     </div>
                 </main>
