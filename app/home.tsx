@@ -1,18 +1,15 @@
 // File: app/home.tsx
 'use client';
 
-import React, { useRef, useState, createContext, useEffect } from "react";
+import React, { useRef, useState, createContext } from "react";
 import ReactPlayer from "react-player";
 import { Sidebar } from '@/components/sidebar/sidebar';
 import FooterSection from '@/components/footer';
 import VideoPlayer from "@/components/videoPlayer";
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { redirect, useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
 import { useMediaQuery } from "usehooks-ts";
 import Image from "next/image";
 import AllContextsProvider from "@/components/AllContextsProvider";
-import styles from './HomePage.module.css'; // Import CSS module
 
 
 // Create the isDesktop context
@@ -52,6 +49,9 @@ export const Context_error = createContext(null);
 export const Context_router = createContext(null);
 export const Context_user = createContext(null);
 export const Context_loading = createContext(null);
+
+
+export const Context_imageElements = createContext(null);
 
 
 
@@ -102,6 +102,10 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
     const isDesktop = useIsDesktop();
 
 
+    const [imageElements, setImageElements] = useState([]);
+
+
+
 
     const contexts = [
         [Context_user, { user, setUser }],
@@ -135,6 +139,7 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
         [Context_isFocused, { isFocused, setIsFocused }],
         [Context_showSuggestions, { showSuggestions, setShowSuggestions }],
         [Context_isDesktop, isDesktop],
+        [Context_imageElements, { imageElements, setImageElements }]
     ];
 
     return (
