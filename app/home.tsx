@@ -142,7 +142,7 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
             <div className="bg-custom-dark">
 
                 {isDesktop ? null :
-                    <div className="pt-3 fixed top-0 bg-custom-dark w-full h-full">
+                    <div className="pt-3 fixed top-0 bg-custom-dark w-full h-[50px] z-10">
                         <Image src="/logo-text.png" alt="logo" className='mx-3' width={100} height={100} priority />
                     </div>
                 }
