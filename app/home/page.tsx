@@ -16,7 +16,7 @@ export default function HomePage() {
 	const isDesktop = isDesktopContext;
 
 	return (
-		<main className="bg-custom-dark h-[100%] w-[100%] ">
+		<div className="bg-custom-dark h-[100%] w-[100%] ">
 			<div className="bg-custom-dark h-auto">
 				<TopArtists />
 			</div>
@@ -28,6 +28,6 @@ export default function HomePage() {
 			<div className='bg-custom-dark p-4 h-[350px]'>
 				<MyList where={"home"} />
 			</div>
-		</main>
+		</div>
 	);
 }

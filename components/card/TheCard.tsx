@@ -30,8 +30,8 @@ export default function TheCard({ item, where }) {
 		setSelectedVideo(video);
 		setIsDrawerOpen(true);
 		setPlaying(true);
-		console.log(video);
-		const channelVideosData = await fetchChannelVideos(video.snippet.channelId);
+/* 		console.log(video);
+ */		const channelVideosData = await fetchChannelVideos(video.snippet.channelId);
 		setChannelVideos(channelVideosData);
 
 	};

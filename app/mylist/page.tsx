@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { Play, Pause, Heart, HeartCrack } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -12,6 +12,7 @@ import { fetchDefaultMusic, fetchChannelVideos } from '@/utils/fetchData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import FooterSection from '@/components/footer';
 import InformationOfTheChannel from '@/components/InformationOfTheChannel';
+import {Context_isDesktop} from '../home';
 
 
 export default function MyList({where}) {
@@ -35,6 +36,8 @@ export default function MyList({where}) {
   const [message, setMessage] = useState<string>('');
   const videoEndProcessingRef = useRef(false); // Ref to track if video end logic is being processed
 
+  const isDesktopContext = useContext(Context_isDesktop);
+  const isDesktop = isDesktopContext;
 
 
   const truncateText = (text: string, maxLength: number) => {

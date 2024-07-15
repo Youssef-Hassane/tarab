@@ -1,6 +1,6 @@
 // File: components/SearchSection.tsx
 import { Button } from "./ui/button";
-import { Context_query, Context_results, Context_suggestions, Context_isFocused, Context_showSuggestions } from "../app/home";
+import { Context_query, Context_results, Context_suggestions, Context_isFocused, Context_showSuggestions, Context_results_Songs, Context_results_Channels } from "../app/home";
 import { useContext, useEffect, useRef } from "react";
 import { SearchForVideosFetch, SearchForChannelsFetch, FetchSuggestionsVideos, FetchSuggestionsChannels } from '@/utils/fetchData';
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
@@ -11,9 +11,12 @@ import { useMediaQuery } from 'usehooks-ts';
 export default function SearchSection({ where, pathname }) {
     const queryContext = useContext(Context_query);
     const resultsContext = useContext(Context_results);
+    const resultsChannelsContext = useContext(Context_results_Channels);
+
     const suggestionsContext = useContext(Context_suggestions);
     const isFocusedContext = useContext(Context_isFocused);
     const showSuggestionsContext = useContext(Context_showSuggestions);
+    const resultsSongsContext = useContext(Context_results_Songs);
 
 
 
@@ -22,6 +25,10 @@ export default function SearchSection({ where, pathname }) {
     const { suggestions, setSuggestions } = suggestionsContext;
     const { isFocused, setIsFocused } = isFocusedContext;
     const { showSuggestions, setShowSuggestions } = showSuggestionsContext;
+    const { resultsSong, setResultsSong } = resultsSongsContext || {};
+    const { resultsChannel, setResultsChannel } = resultsChannelsContext;
+
+
 
     const searchContainerRef = useRef(null);
 
@@ -29,12 +36,12 @@ export default function SearchSection({ where, pathname }) {
 
     const SearchForVideos = async () => {
         const results = await SearchForVideosFetch(query);
-        setResults(results);
+        setResultsSong(results);
     };
 
     const SearchChannels = async () => {
         const results = await SearchForChannelsFetch(query);
-        setResults(results);
+        setResultsChannel(results);
     };
 
     const handleSearch = () => {
@@ -133,7 +140,7 @@ export default function SearchSection({ where, pathname }) {
                     onBlur={() => setIsFocused(false)}
                     className={`bg-gray-700 text-white text-[16px] max-w-[600px] h-[40px] rounded-sm p-3 focus-visible:outline-none ${!isDesktop ? 'w-full' : 'w-full'}`}
                 />
-                
+
                 {isDesktop && (
                     <Button
                         onClick={handleSearch}
@@ -145,25 +152,25 @@ export default function SearchSection({ where, pathname }) {
             </div>
             {/* suggestions container */}
             {isDesktop && (
-            <div
-                className={`pt-2 absolute z-50 top-[49px] max-w-[600px] w-full rounded-b-lg overflow-hidden -ml-[158px] transition-all duration-300 ${showSuggestions && suggestions.length > 0 ? 'h-[400px] opacity-100' : 'h-0 opacity-0'
-                    } bg-gray-700`}
-            >
-                <ScrollArea className="absolute max-w-[600px] w-full bg-gray-700 h-full z-50">
-                    <div className="p-2">
-                        {suggestions && suggestions.map((suggestion, index) => (
-                            <div
-                                key={index}
-                                className={`group flex items-center gap-2 p-2 hover:bg-custom-yellow hover:text-custom-dark rounded-sm cursor-pointer`}
-                                onClick={() => handleSuggestionClick(suggestion)}
-                            >
-                                <ListOfSuggestions suggestion={suggestion} />
-                            </div>
-                        ))}
-                    </div>
-                    <ScrollBar orientation="vertical" />
-                </ScrollArea>
-            </div>
+                <div
+                    className={`pt-2 absolute z-50 top-[49px] max-w-[600px] w-full rounded-b-lg overflow-hidden -ml-[158px] transition-all duration-300 ${showSuggestions && suggestions.length > 0 ? 'h-[400px] opacity-100' : 'h-0 opacity-0'
+                        } bg-gray-700`}
+                >
+                    <ScrollArea className="absolute max-w-[600px] w-full bg-gray-700 h-full z-50">
+                        <div className="p-2">
+                            {suggestions && suggestions.map((suggestion, index) => (
+                                <div
+                                    key={index}
+                                    className={`group flex items-center gap-2 p-2 hover:bg-custom-yellow hover:text-custom-dark rounded-sm cursor-pointer`}
+                                    onClick={() => handleSuggestionClick(suggestion)}
+                                >
+                                    <ListOfSuggestions suggestion={suggestion} />
+                                </div>
+                            ))}
+                        </div>
+                        <ScrollBar orientation="vertical" />
+                    </ScrollArea>
+                </div>
             )}
         </div>
     )

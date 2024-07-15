@@ -6,13 +6,10 @@ import ReactPlayer from "react-player";
 import { Sidebar } from '@/components/sidebar/sidebar';
 import FooterSection from '@/components/footer';
 import VideoPlayer from "@/components/videoPlayer";
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { redirect, useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
 import { useMediaQuery } from "usehooks-ts";
 import Image from "next/image";
 import AllContextsProvider from "@/components/AllContextsProvider";
-import styles from './HomePage.module.css'; // Import CSS module
 
 
 // Create the isDesktop context

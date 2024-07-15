@@ -19,7 +19,8 @@ import {
 	Context_url,
 	Context_message,
 	Context_downloadProgress,
-	Context_isDownloading
+	Context_isDownloading,
+	Context_isDesktop
 } from '../app/home';
 
 
@@ -42,6 +43,8 @@ export default function VideoPlayer() {
 	const downloadProgressContext = useContext(Context_downloadProgress);
 	const isDownloadingContext = useContext(Context_isDownloading);
 	const playerRefsContext = useContext(Context_playerRefs);
+	const isDesktopContext = useContext(Context_isDesktop);
+	const isDesktop = isDesktopContext;
 
 
 	const { selectedVideo, setSelectedVideo } = selectedVideoContext;
@@ -97,8 +100,7 @@ export default function VideoPlayer() {
 
 
 	return (
-		<div className="mt-5 flex flex-col items-center justify-center w-[1080px] h-[97%] pb-[100px] ">
-
+		<div className={`bg-custom-dark mt-5 relative flex flex-col items-center justify-center ${isDesktop ? 'w-[1080px] h-[97%] pb-[100px]' : 'rounded-sm h-[300px]'}`}>
 			<ReactPlayer
 				ref={playerRefs.current['player1']}
 				url={`https://www.youtube.com/watch?v=${selectedVideo.id.videoId}`}
@@ -121,6 +123,7 @@ export default function VideoPlayer() {
 					},
 				}}
 			/>
+			<div className={`absolute w-full  top-0 left-0 z-10 ${isDesktop ? 'w-[1080px] h-[87%]' : 'h-full'}`}></div>
 		</div>
 	);
 }
