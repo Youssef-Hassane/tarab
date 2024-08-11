@@ -1,28 +1,16 @@
 // File: components/footer.tsx
-
 "use client";
-
-
 import React, { useContext } from 'react';
 import { Shuffle, SkipBack, Play, Pause, SkipForward, Repeat, Repeat1, Volume2, Volume1, Volume, VolumeX, Airplay, Cast } from 'lucide-react';
 import { Slider } from "@/components/ui/slider";
 import { Button } from '@/components/ui/button';
-import {
-    Context_selectedVideo,
-    Context_channelVideos,
-    Context_playing,
-    Context_volume,
-    Context_oldVolume,
-    Context_played,
-    Context_playerRefs,
-    Context_shuffle,
-    Context_repeatMode,
-    Context_isDesktop
-} from '../app/home';
-import { useMediaQuery } from 'usehooks-ts';
+import { Context_selectedVideo, Context_channelVideos, Context_playing, Context_volume, Context_oldVolume, Context_played, Context_playerRefs, Context_shuffle, Context_repeatMode, Context_isDesktop } from '../app/home';
 import truncateText from '@/utils/truncateText';
 
 function ProgressBar({ played, onSeek }) {
+    const isDesktopContext = useContext(Context_isDesktop);
+    const isDesktop = isDesktopContext;
+
     const handleSeek = (value: number[]) => {
         const seekValue = value[0] / 100;
         onSeek(seekValue);
@@ -32,7 +20,7 @@ function ProgressBar({ played, onSeek }) {
         <Slider
             value={[played * 100]}
             onValueChange={handleSeek}
-            className="w-full pt-1 px-1"
+            className={`w-full pt-1 px-1 ${isDesktop ? '' : 'absolute'}`}
             min={0}
             max={100}
         />
@@ -52,6 +40,7 @@ export default function FooterSection({ inDrawer = false }) {
 
     const isDesktopContext = useContext(Context_isDesktop);
     const isDesktop = isDesktopContext;
+    
 
 
     const handleSeek = (seekValue: number) => {
@@ -112,24 +101,34 @@ export default function FooterSection({ inDrawer = false }) {
     return (
         <div className={`${inDrawer
             ? `bg-custom-dark text-base-content rounded  z-50 ${isDesktop ? 'h-[70px] bg-custom-dark text-base-content rounded fixed bottom-[40px] w-[95%] left-[2.5%]' : 'bg-custom-dark text-base-content rounded h-[300px] w-auto border-gray-700 border-2 border-opacity-80'}`
-            : `bg-custom-dark text-base-content rounded h-[70px] fixed bottom-0 left-0 z-50 ${isDesktop ? 'w-screen' : 'bg-custom-dark text-base-content rounded h-[65px] fixed bottom-[89px] w-[calc(100%-10px)] mx-[5px] border-gray-700 border-2 border-opacity-80'}`
+            : `bg-custom-dark text-base-content rounded h-[70px] fixed bottom-0 left-0 z-50 ${isDesktop ? 'w-screen' : `${!selectedVideo ? 'hidden':'bg-custom-dark text-base-content rounded h-[65px] fixed bottom-[89px] w-[calc(100%-10px)] mx-[5px] border-gray-700 border-2 border-opacity-80'}`}`
             } 
           `}>
             <ProgressBar played={played} onSeek={handleSeek} />
             <div className={`${inDrawer
                 ? `flex items-center justify-between h-full w-full  ${isDesktop ? 'px-5' : 'flex-col'} '`
-                : `flex items-center justify-between h-full w-full px-5 pb-2'`
+                : `flex items-center justify-between h-full w-full px-5   ${isDesktop ? 'pb-3' : 'pt-2'} '`
                 }`}>
                 <div>
                     {selectedVideo && selectedVideo.snippet && (
                         <>
-                            {isDesktop ? (
-                                <h1 className="text-white text-[16px] group-hover:text-custom-dark">{selectedVideo.snippet.title}</h1>
-                            ) : (
-                                <h1 className="text-white text-[14px] group-hover:text-custom-dark">{truncateText(selectedVideo.snippet.title, 40)}</h1>)}
-                            <h1 className="text-gray-500 text-[12px]">
-                                {selectedVideo.snippet.channelTitle}
-                            </h1>
+                            {isDesktop ?
+                                (
+                                    <>
+                                        <h1 className="text-white text-[16px] group-hover:text-custom-dark">{selectedVideo.snippet.title}</h1>
+                                        <h1 className="text-gray-500 text-[12px]">{selectedVideo.snippet.channelTitle}</h1>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h1 className="text-white text-[14px] group-hover:text-custom-dark">{
+                                            inDrawer ? null : truncateText(selectedVideo.snippet.title, 45)
+                                        }</h1>
+                                        <h1 className="text-gray-500 text-[12px]">{
+                                            inDrawer ? null : selectedVideo.snippet.channelTitle
+                                        }</h1>
+                                    </>
+                                )
+                            }
                         </>
                     )}
                 </div>
@@ -172,38 +171,48 @@ export default function FooterSection({ inDrawer = false }) {
                         </div>
                     </div>
                 ) : (
-                    <div  className='justify-center'>
-                        <div className="flex gap-3  justify-center">
-                            <Button onClick={handleShuffleClick} className={`group bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px] `}>
-                                {shuffle === 'off' ? <Shuffle /> : <Shuffle size={24} className='text-custom-yellow group-hover:text-custom-dark' />}
-                            </Button>
-                            <Button onClick={handleSkipBack} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
-                                <SkipBack size={24} />
-                            </Button>
-                            <Button onClick={() => setPlaying(!playing)} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
-                                {playing ? <Pause size={24} /> : <Play size={24} />}
-                            </Button>
-                            <Button onClick={handleSkipForward} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
-                                <SkipForward size={24} />
-                            </Button>
-                            <Button variant="ghost" onClick={handleRepeatClick} className="group bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
-                                {repeatMode === 'off' ? <Repeat /> : repeatMode === 'repeat-one' ? <Repeat1 className='text-custom-yellow group-hover:text-custom-dark' /> : <Repeat className="text-red-500 w-6 h-6" />}
-                            </Button>
-                        </div>
-                        
-                        <div className="flex gap-2 items-center justify-center">
-                            <Button onClick={() => handleVolumeChange(volume === 0 ? oldVolume : 0)} className="bg-custom-dark hover:bg-custom-yellow rounded-full h-[50px] w-[50px]">
-                                {volume > 0.8 ? <Volume2 size={24} /> : volume > 0.4 ? <Volume1 size={24} /> : volume > 0.1 ? <Volume size={24} /> : <VolumeX size={24} />}
-                            </Button>
-                            <Slider
-                                value={[volume * 100]} // Wrap value in array
-                                onValueChange={(value) => handleVolumeChange(value[0] / 100)} // Handle change
-                                className="w-32"
-                                min={0}
-                                max={100}
-                            />
-                        </div>
-                    </div>
+                    <>
+                        {inDrawer ?
+                            (
+                                <div className='justify-center'>
+                                    <div className="flex gap-3  justify-center">
+                                        <Button onClick={handleShuffleClick} className={`group bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px] `}>
+                                            {shuffle === 'off' ? <Shuffle /> : <Shuffle size={24} className='text-custom-yellow group-hover:text-custom-dark' />}
+                                        </Button>
+                                        <Button onClick={handleSkipBack} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
+                                            <SkipBack size={24} />
+                                        </Button>
+                                        <Button onClick={() => setPlaying(!playing)} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
+                                            {playing ? <Pause size={24} /> : <Play size={24} />}
+                                        </Button>
+                                        <Button onClick={handleSkipForward} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
+                                            <SkipForward size={24} />
+                                        </Button>
+                                        <Button variant="ghost" onClick={handleRepeatClick} className="group bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
+                                            {repeatMode === 'off' ? <Repeat /> : repeatMode === 'repeat-one' ? <Repeat1 className='text-custom-yellow group-hover:text-custom-dark' /> : <Repeat className="text-red-500 w-6 h-6" />}
+                                        </Button>
+                                    </div>
+
+                                    <div className="flex gap-2 items-center justify-center">
+                                        <Button onClick={() => handleVolumeChange(volume === 0 ? oldVolume : 0)} className="bg-custom-dark hover:bg-custom-yellow rounded-full h-[50px] w-[50px]">
+                                            {volume > 0.8 ? <Volume2 size={24} /> : volume > 0.4 ? <Volume1 size={24} /> : volume > 0.1 ? <Volume size={24} /> : <VolumeX size={24} />}
+                                        </Button>
+                                        <Slider
+                                            value={[volume * 100]}
+                                            onValueChange={(value) => handleVolumeChange(value[0] / 100)}
+                                            className="w-32"
+                                            min={0}
+                                            max={100}
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                <Button onClick={() => setPlaying(!playing)} className="bg-custom-dark text-white hover:bg-custom-yellow hover:text-custom-dark rounded-full h-[50px] w-[50px]">
+                                    {playing ? <Pause size={24} /> : <Play size={24} />}
+                                </Button>
+                            )
+                        }
+                    </>
                 )
                 }
             </div>

@@ -278,7 +278,7 @@ export default function MyList({where}) {
   }
 
   return (
-    <div className="bg-custom-dark text-base-content rounded w-full pb-[70px] p-2">
+    <div className="bg-custom-dark text-base-content rounded w-full pb-[70px] p-2 h-100vh">
       <h1 className="text-2xl font-bold mb-4">My List</h1>
       <div className="bg-custom-dark w-full rounded-lg overflow-hidden  p-1">
         <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">

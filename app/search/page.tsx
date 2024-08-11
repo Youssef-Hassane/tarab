@@ -7,20 +7,7 @@ import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { fetchDefaultMusic } from '@/utils/fetchData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import FooterSection from '@/components/footer';
-import {
-  Context_results,
-  Context_selectedVideo,
-  Context_isDrawerOpen,
-  Context_playerRefs,
-  Context_highlightedCardId,
-  Context_favorites,
-  Context_url,
-  Context_message,
-  Context_downloadProgress,
-  Context_isDownloading,
-  Context_isDesktop,
-  Context_results_Songs
-} from '../home';
+import { Context_results, Context_selectedVideo, Context_isDrawerOpen, Context_playerRefs, Context_highlightedCardId, Context_favorites, Context_url, Context_message, Context_downloadProgress, Context_isDownloading, Context_isDesktop, Context_results_Songs} from '../home';
 import VideoDisplay from '@/components/VideoDisplay';
 import ListOfVideoOfChannel from '@/components/ListOfVideoOfChannel';
 import InformationOfTheChannel from '@/components/InformationOfTheChannel';
