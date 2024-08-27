@@ -114,7 +114,7 @@ export default function TopSongs() {
 
   return (
     <div className="bg-custom-dark p-4">
-      <h1 className="text-2xl font-bold mb-4">Top Songs</h1>
+      <h1 className="text-2xl font-bold mb-4 text-white">Top Songs</h1>
       <aside className="bg-custom-dark text-base-content w-full ">
         <div className="bg-custom-dark w-full rounded-lg overflow-hidden p-1">
           <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">

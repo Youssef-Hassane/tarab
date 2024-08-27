@@ -40,7 +40,7 @@ export default function TopArtists() {
 
 	return (
 		<div className="bg-custom-dark p-4">
-			<h1 className="text-2xl font-bold mb-4">Top Artists</h1>
+			<h1 className="text-2xl font-bold mb-4 text-white">Top Artists</h1>
 			<aside className="bg-custom-dark text-base-content rounded w-full ">
 				<div className="bg-custom-dark w-full rounded-lg overflow-hidden p-1">
 					<ScrollArea className=" bg-custom-dark w-full overflow-auto">
