@@ -10,6 +10,7 @@ import FooterSection from '@/components/footer';
 import TheCard from '@/components/card/TheCard';
 import { FakeCardArtists, FakeCard } from '@/components/card/FakeCard';
 import ListOfChannels from '@/components/ListOfChannels';
+import InformationOfTheChannel from '../InformationOfTheChannel';
 
 export default function TopArtists() {
 	const isDesktopContext = useContext(Context_isDesktop);
@@ -58,19 +59,29 @@ export default function TopArtists() {
 								<FakeCardArtists where={"home"} />
 							)}
 							<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-								<DrawerContent className="bg-custom-yellow h-[90%] w-[95%] left-[2.5%] p-5">
-									<div className='bg-custom-dark w-full h-[99%] rounded-sm flex '>
-										<ScrollArea className="mt-5 w-[500px] bg-custom-dark rounded-sm h-[97%] pb-[100px]">
-											<div className="p-2">
-												{resultsChannel && resultsChannel.map((item) => (
-													<ListOfChannels item={item} key={item.id} />
-												))}
-											</div>
-										</ScrollArea>
-										<VideoDisplay />
-										<ListOfVideoOfChannel />
-										<FooterSection inDrawer={true} />
-									</div>
+								<DrawerContent className={`${isDesktop ? "bg-custom-yellow h-[90%] w-[95%] left-[2.5%] p-5" : "bg-custom-yellow p-3 pt-5 h-[90%] w-[calc(100%-10px)] mx-[5px]"}`}>
+									
+									{isDesktop ?
+										<div className='bg-custom-dark w-full h-[99%] rounded-sm flex '>
+											<ScrollArea className="mt-5 w-[500px] bg-custom-dark rounded-sm h-[97%] pb-[100px]">
+												<div className="p-2">
+													{resultsChannel && resultsChannel.map((item) => (
+														<ListOfChannels item={item} key={item.id} />
+													))}
+												</div>
+											</ScrollArea>
+											<VideoDisplay />
+											<ListOfVideoOfChannel />
+											<FooterSection inDrawer={true} />
+										</div>
+										:
+										<div className={`bg-custom-yellow rounded-sm h-[99%] flex-col flex gap-1`}>
+											<VideoDisplay />
+											<InformationOfTheChannel />
+											<ListOfVideoOfChannel />
+											<FooterSection inDrawer={true} />
+										</div>
+									}
 								</DrawerContent>
 							</Drawer>
 						</div>

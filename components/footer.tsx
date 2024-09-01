@@ -17,13 +17,15 @@ function ProgressBar({ played, onSeek }) {
     };
 
     return (
-        <Slider
-            value={[played * 100]}
-            onValueChange={handleSeek}
-            className={`w-full pt-1 px-1 ${isDesktop ? '' : 'absolute'}`}
-            min={0}
-            max={100}
-        />
+        <div className={`${isDesktop ? '' : 'absolute w-full'}`}>
+            <Slider
+                value={[played * 100]}
+                onValueChange={handleSeek}
+                className={`w-full pt-1 px-1 ${isDesktop ? '' : 'w-[calc(100%-30px)]'}`}
+                min={0}
+                max={100}
+            />
+        </div>
     );
 }
 
@@ -40,7 +42,7 @@ export default function FooterSection({ inDrawer = false }) {
 
     const isDesktopContext = useContext(Context_isDesktop);
     const isDesktop = isDesktopContext;
-    
+
 
 
     const handleSeek = (seekValue: number) => {
@@ -100,13 +102,14 @@ export default function FooterSection({ inDrawer = false }) {
 
     return (
         <div className={`${inDrawer
-            ? `bg-custom-dark text-base-content rounded  z-50 ${isDesktop ? 'h-[70px] bg-custom-dark text-base-content rounded fixed bottom-[40px] w-[95%] left-[2.5%]' : 'bg-custom-dark text-base-content rounded h-[300px] w-auto border-gray-700 border-2 border-opacity-80'}`
-            : `bg-custom-dark text-base-content rounded h-[70px] fixed bottom-0 left-0 z-50 ${isDesktop ? 'w-screen' : `${!selectedVideo ? 'hidden':'bg-custom-dark text-base-content rounded h-[65px] fixed bottom-[89px] w-[calc(100%-10px)] mx-[5px] border-gray-700 border-2 border-opacity-80'}`}`
+            ? `bg-custom-dark text-base-content rounded  z-50 ${isDesktop ? 'h-[70px] bg-custom-dark text-base-content rounded fixed bottom-[40px] w-[95%] left-[2.5%]' : 'bg-custom-dark text-base-content rounded h-[200px] w-[100%] border-gray-700 border-2 border-opacity-80'}`
+            : `bg-custom-dark text-base-content rounded h-[70px] fixed bottom-0 left-0 z-50 ${isDesktop ? 'w-screen' : `${!selectedVideo ? 'hidden' : 'bg-custom-dark text-base-content rounded h-[65px] fixed bottom-[89px] w-[calc(100%-10px)] mx-[5px] border-gray-700 border-2 border-opacity-80'}`}`
             } 
           `}>
+
             <ProgressBar played={played} onSeek={handleSeek} />
             <div className={`${inDrawer
-                ? `flex items-center justify-between h-full w-full  ${isDesktop ? 'px-5' : 'flex-col'} '`
+                ? `flex items-center justify-between h-full w-full  ${isDesktop ? 'px-5' : 'flex-col pt-4'} '`
                 : `flex items-center justify-between h-full w-full px-5   ${isDesktop ? 'pb-3' : 'pt-2'} '`
                 }`}>
                 <div>
