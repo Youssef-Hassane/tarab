@@ -12,10 +12,11 @@ import { fetchDefaultMusic, fetchChannelVideos } from '@/utils/fetchData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import FooterSection from '@/components/footer';
 import InformationOfTheChannel from '@/components/InformationOfTheChannel';
-import {Context_isDesktop} from '../home';
+import { Context_isDesktop } from '../home';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
-export default function MyList({where}) {
+export default function MyList({ where }) {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -290,14 +291,21 @@ export default function MyList({where}) {
 
                 <div className="p-2">
                   <CardHeader className="text-white p-0 relative">
-                    <Image
+                    {/*  <Image
                       src={video.snippet.thumbnails.high.url}
                       alt={video.snippet.title}
                       className="rounded-sm"
                       width={500}
                       height={500}
                       priority
-                    />
+                    /> */}
+                    <Avatar className={`rounded-sm ${isDesktop ? "h-[115px] w-[154px]" : "h-[40px] w-[40px]"}`}>
+                      <AvatarImage src={video.snippet.thumbnails.high.url} />
+                      <AvatarFallback></AvatarFallback>
+                    </Avatar>
+
+
+
                     <Button
                       className={`button-icon bg-custom-yellow rounded-full w-[50px] h-[50px] absolute bottom-[-60px] right-1 flex items-center justify-center opacity-0 transition-all duration-300 ease-in-out group-hover:bottom-1 group-hover:opacity-100 shadow-xl z-50 ${highlightedCardId === video.id
                         ? 'bg-custom-yellow text-custom-dark bottom-1 opacity-100'
@@ -378,19 +386,28 @@ export default function MyList({where}) {
                   <div className="p-2">
 
                     {favorites.length > 0 ? (
-                       favorites.filter(video => video?.snippet?.thumbnails?.high?.url).map((video: any) => (
+                      favorites.filter(video => video?.snippet?.thumbnails?.high?.url).map((video: any) => (
                         <div
                           key={video.id}
                           className={`group flex items-center gap-2 p-2 hover:bg-custom-yellow hover:text-custom-dark rounded-sm cursor-pointer ${highlightedCardId === video.id ? 'bg-custom-yellow text-custom-dark' : ''}`}
                           onClick={() => setSelectedVideo(video)}
                         >
-                          <Image
+
+
+                          {/* <Image
                             src={video.snippet.thumbnails.default.url}
                             alt={video.snippet.title}
                             width={60}
                             height={60}
                             className="rounded-sm"
-                          />
+                          /> */}
+
+
+                          <Avatar className={`rounded-sm ${isDesktop ? "h-[115px] w-[154px]" : "h-[40px] w-[40px]"}`}>
+                            <AvatarImage src={video.snippet.thumbnails.default.url} />
+                            <AvatarFallback></AvatarFallback>
+                          </Avatar>
+
                           <div className="flex flex-col">
 
                             <span className={`group-hover:text-custom-dark ${highlightedCardId === video.id ? 'text-custom-dark' : 'text-white'} `}>{truncateText(video.snippet.title, 30)}</span>
