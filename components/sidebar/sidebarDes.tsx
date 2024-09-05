@@ -61,15 +61,21 @@ export function SidebarDes(props: SidebarProps) {
 	return (
 		<aside className="bg-custom-dark h-screen w-[270px] max-w-xs fixed left-0 top-0 border-r mb-[70px] z-50">
 			<div className="h-full px-3 py-4 ">
-				
-				<Image
-                        src="/logo-text.png"
-                        alt="logo"
-                        className='mx-3'
-                        width={100}
-                        height={100}
-                        priority
-                    />
+
+				{/* <Image
+					src="/logo-text.png"
+					alt="logo"
+					className='mx-3'
+					width={100}
+					height={100}
+					priority
+				/> */}
+
+				<Avatar className={`rounded-none mx-3 w-[100px] h-[31.250px]`}>
+					<AvatarImage src="/logo-text.png" />
+					<AvatarFallback></AvatarFallback>
+				</Avatar>
+
 				<div className="mt-5">
 					<div className="flex flex-col gap-1 w-full">
 						{props.sidebarItems.links.map((link, index) => (

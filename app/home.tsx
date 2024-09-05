@@ -10,6 +10,7 @@ import { User } from '@supabase/supabase-js';
 import { useMediaQuery } from "usehooks-ts";
 import Image from "next/image";
 import AllContextsProvider from "@/components/AllContextsProvider";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 
 // Create the isDesktop context
@@ -140,7 +141,11 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
 
                 {isDesktop ? null :
                     <div className="pt-3 fixed top-0 bg-custom-dark w-full h-[50px] z-10">
-                        <Image src="/logo-text.png" alt="logo" className='mx-3' width={100} height={100} priority />
+                        {/* <Image src="/logo-text.png" alt="logo" className='mx-3' width={100} height={100} priority /> */}
+                        <Avatar className={`rounded-none mx-3 w-[100px]  h-[31.250px] z-10`}>
+                            <AvatarImage src="/logo-text.png" />
+                            <AvatarFallback></AvatarFallback>
+                        </Avatar>
                     </div>
                 }
 
