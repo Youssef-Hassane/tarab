@@ -2,7 +2,9 @@ import Image from 'next/image';
 import { CardHeader } from '@/components/ui/card';
 import CardIconButton from '@/components/card/CardIconButton';
 import FavoriteButton from '@/components/FavoriteButton';
+import { Avatar as AvatarI, AvatarFallback as AvatarFallbackI, AvatarImage as AvatarImageI} from '@/components/ui/avatarImage';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 import { useContext } from 'react';
 import { Context_isDesktop } from "@/app/home"
 
@@ -26,10 +28,10 @@ export default function CardHeaderInfo({ item, where }) {
 					priority
 				/> */}
 
-				<Avatar className={`rounded-sm ${isDesktop ? "h-[115px] w-[154px]" : "h-[40px] w-[40px]"}`}>
-					<AvatarImage src={item.snippet.thumbnails.high.url} />
-					<AvatarFallback></AvatarFallback>
-				</Avatar>
+				<AvatarI className={`rounded-sm ${isDesktop ? "h-[115px] w-[154px]" : "h-[40px] w-[40px]"}`}>
+					<AvatarImageI src={item.snippet.thumbnails.high.url} />
+					<AvatarFallbackI></AvatarFallbackI>
+				</AvatarI>
 
 
 				{isDesktop ? <CardIconButton item={item} where={where} /> : null}

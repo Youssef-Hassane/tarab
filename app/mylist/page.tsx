@@ -13,7 +13,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import FooterSection from '@/components/footer';
 import InformationOfTheChannel from '@/components/InformationOfTheChannel';
 import { Context_isDesktop } from '../home';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatarImage';
 
 
 export default function MyList({ where }) {

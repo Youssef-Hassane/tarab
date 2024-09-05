@@ -10,7 +10,7 @@ import { User } from '@supabase/supabase-js';
 import { useMediaQuery } from "usehooks-ts";
 import Image from "next/image";
 import AllContextsProvider from "@/components/AllContextsProvider";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatarImage";
 
 
 // Create the isDesktop context
