@@ -137,7 +137,7 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
 
     return (
         <AllContextsProvider contexts={contexts}>
-            <div className="bg-custom-dark">
+            <div className="bg-custom-dark h-full">
 
                 {isDesktop ? null :
                     <div className="pt-3 fixed top-0 bg-custom-dark w-full h-[50px] z-10">

@@ -9,7 +9,7 @@ import MyList from '../mylist/page';
 export default function HomePage() {
 
 	return (
-		<div className="bg-custom-dark h-[100%] w-[100%] ">
+		<div className="bg-red-500 h-[100%] w-[100%] ">
 			<div className="bg-custom-dark h-auto">
 				<TopArtists />
 			</div>
@@ -18,7 +18,7 @@ export default function HomePage() {
 				<TopSongs />
 			</div>
 			<Separator />
-			<div className='bg-custom-dark p-4 h-[350px]'>
+			<div className='bg-custom-dark p-4 h-[100%]'>
 				<MyList where={"home"} />
 			</div>
 		</div>
