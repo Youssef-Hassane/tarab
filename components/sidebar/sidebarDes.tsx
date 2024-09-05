@@ -6,9 +6,10 @@ import { Separator } from "../ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { LogOut, MoreHorizontal, Settings } from "lucide-react";
+import { LogOut, MoreHorizontal, Settings, CircleUser } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from 'next/image';
+
 
 import { useRouter } from 'next/navigation';
 
@@ -97,8 +98,7 @@ export function SidebarDes(props: SidebarProps) {
 									<div className='flex justify-between items-center w-full'>
 										<div className='flex gap-2'>
 											<Avatar className='h-5 w-5'>
-												<AvatarImage src='https://avatars.githubusercontent.com/u/78090820?v' />
-												<AvatarFallback>{userData ? `${userData.first_name} ${userData.last_name}` : 'Loading...'}</AvatarFallback>
+												<CircleUser />
 											</Avatar>
 											<span>{userData ? `${userData.first_name} ${userData.last_name}` : 'Loading...'}</span>
 										</div>
@@ -106,16 +106,29 @@ export function SidebarDes(props: SidebarProps) {
 									</div>
 								</Button>
 							</PopoverTrigger>
-							<PopoverContent className='mb-2 w-56 p-3 rounded-[1rem]'>
+							<PopoverContent className='mb-2 w-56 p-3 rounded-sm'>
 								<div className='space-y-1'>
 									<Link href='/'>
-										<SidebarButton size='sm' icon={Settings} className='w-full'>
-											Account Settings
+										<SidebarButton size='sm' className='w-full'>
+
+											<div className='flex justify-between w-full'>
+												<Settings color="#171b24" size={20} />
+												<p className='text-custom-dark pl-2'>Account Settings</p>
+											</div>
 										</SidebarButton>
 									</Link>
-									<SidebarButton size='sm' icon={LogOut} className='w-full' onClick={handleLogout}>
-										Log Out
+									<SidebarButton
+										size='sm'
+										className='w-full'
+										onClick={handleLogout}
+									>
+										<div className='flex justify-between w-full'>
+											<LogOut color="#171b24" size={20} />
+											<p className='text-custom-dark pl-2'>Log Out</p>
+										</div>
 									</SidebarButton>
+
+
 								</div>
 							</PopoverContent>
 						</Popover>
