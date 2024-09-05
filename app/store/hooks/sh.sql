@@ -35,15 +35,3 @@ SELECT
 FROM auth.users
 WHERE id NOT IN (SELECT id::uuid FROM public."profiles");
 
-
-create table public.profiles (
-  id uuid not null references auth.users on delete cascade,
-  first_name text,
-  last_name text,
-  username text,
-  email text,
-
-  primary key (id)
-);
-
-alter table public.profiles enable row level security;

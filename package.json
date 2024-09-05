@@ -38,7 +38,8 @@
     "usehooks-ts": "^3.1.0",
     "vaul": "^0.9.1",
     "youtube-transcript": "^1.2.1",
-    "ytdl-core": "^4.11.5"
+    "ytdl-core": "^4.11.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.24",

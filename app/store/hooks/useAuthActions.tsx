@@ -1,6 +1,6 @@
 import { useAppStore, Profile } from "..";
 import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabase";
 
 export const useAuthActions = () => {
   const { state, dispatch } = useAppStore();
@@ -10,8 +10,13 @@ export const useAuthActions = () => {
   const me = async () => {
     setLoading(true);
     try {
-      //   const profile: Profile = {};
-      //   dispatch({ type: "SET_USER", payload: profile });
+      const user = supabase.auth.getUser();
+
+      if (!user) {
+        dispatch({ type: "SET_USER", payload: null });
+        return;
+      }
+
       setError(null);
     } catch (e) {
       dispatch({ type: "SET_USER", payload: null });
