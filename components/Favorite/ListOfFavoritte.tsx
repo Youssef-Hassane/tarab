@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useContext } from "react";
 import { Context_favorites, Context_highlightedCardId, Context_selectedVideo } from "@/app/home";
 import truncateText from "@/utils/truncateText";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatarImage";
 
 
 
@@ -10,7 +11,7 @@ export default function ListOfFavorite() {
 	const favoritesContext = useContext(Context_favorites);
 	const selectedVideoContext = useContext(Context_selectedVideo);
 	const highlightedCardIdContext = useContext(Context_highlightedCardId);
-	
+
 	if (!favoritesContext || !selectedVideoContext || !highlightedCardIdContext) {
 		return null;
 	}
@@ -33,13 +34,19 @@ export default function ListOfFavorite() {
 							className={`group flex items-center gap-2 p-2 hover:bg-custom-yellow hover:text-custom-dark rounded-sm cursor-pointer ${highlightedCardId === video.id ? 'bg-custom-yellow text-custom-dark' : ''}`}
 							onClick={() => setSelectedVideo(video)}
 						>
-							<Image
+							{/* <Image
 								src={video.snippet.thumbnails.default.url}
 								alt={video.snippet.title}
 								width={60}
 								height={60}
 								className="rounded-sm"
-							/>
+							/> */}
+
+							<Avatar className={`rounded-sm w-[60px]  h-[60px]`}>
+								<AvatarImage src={video.snippet.thumbnails.default.url} />
+								<AvatarFallback></AvatarFallback>
+							</Avatar>
+
 							<div className="flex flex-col">
 
 								<span className={`group-hover:text-custom-dark ${highlightedCardId === video.id ? 'text-custom-dark' : 'text-white'} `}>{truncateText(video.snippet.title, 30)}</span>

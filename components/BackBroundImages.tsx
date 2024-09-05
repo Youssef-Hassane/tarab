@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatarImage';
 
 
 
@@ -13,7 +14,7 @@ export default function BackgroundImages({ count, imageSize }) {
 		const numCols = Math.ceil(count / numRows);
 		const spacingX = window.innerWidth / numCols;
 		const spacingY = window.innerHeight / numRows;
-	
+
 		for (let i = 0; i < count; i++) {
 			const row = Math.floor(i / numCols);
 			const col = i % numCols;
@@ -22,7 +23,7 @@ export default function BackgroundImages({ count, imageSize }) {
 			const image = images[Math.floor(Math.random() * images.length)];
 			elements.push({ image, x, y });
 		}
-	
+
 		setImageElements(elements);
 	};
 
@@ -32,23 +33,43 @@ export default function BackgroundImages({ count, imageSize }) {
 		window.onresize = imageSizeFunction;
 	}, [count, imageSize, images]);
 
+
 	return (
 		<>
 			{imageElements.map((element, i) => (
-				<Image
-					key={i}
-					src={element.image}
-					alt="background icon"
-					style={{
-						position: 'absolute',
-						left: `${element.x}px`,
-						top: `${element.y}px`,
-						opacity: 0.5,
-						zIndex: 1,
-					}}
-					width={imageSize}
-					height={imageSize}
-				/>
+				<>
+					{/* <Image
+						key={i}
+						src={element.image}
+						alt="background icon"
+						style={{
+							position: 'absolute',
+							left: `${element.x}px`,
+							top: `${element.y}px`,
+							opacity: 0.5,
+							zIndex: 1,
+						}}
+						width={imageSize}
+						height={imageSize}
+					/> */}
+
+					<Avatar
+						key={i}
+						className="absolute rounded-sm"
+						style={{
+							left: `${element.x}px`,
+							top: `${element.y}px`,
+							opacity: 0.5,
+							zIndex: 1,
+							width: `${imageSize}px`,
+							height: `${imageSize}px`,
+						}}
+					>
+						<AvatarImage src={element.image} />
+						<AvatarFallback />
+					</Avatar>
+				</>
+
 			))}
 		</>
 	);

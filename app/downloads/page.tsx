@@ -11,6 +11,7 @@ import {
   Context_playing,
   Context_playerRefs
 } from '../home';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatarImage';
 
 interface DownloadedVideo {
   id: string;
@@ -55,8 +56,8 @@ export default function Downloads() {
   };
 
   const handleFavoriteClick = (videoId: string) => {
-    setFavorites(prev => 
-      prev.includes(videoId) 
+    setFavorites(prev =>
+      prev.includes(videoId)
         ? prev.filter(id => id !== videoId)
         : [...prev, videoId]
     );
@@ -74,26 +75,28 @@ export default function Downloads() {
           <Card
             key={video.id}
             onClick={() => handleCardClick(video)}
-            className={`group z-20 w-[170px] h-auto max-h-[230px] bg-custom-dark border-none hover:bg-custom-yellow hover:text-custom-dark rounded-sm ${
-              highlightedCardId === video.id ? 'bg-custom-yellow text-custom-dark' : ''
-            }`}
+            className={`group z-20 w-[170px] h-auto max-h-[230px] bg-custom-dark border-none hover:bg-custom-yellow hover:text-custom-dark rounded-sm ${highlightedCardId === video.id ? 'bg-custom-yellow text-custom-dark' : ''
+              }`}
           >
             <div className="p-2">
               <CardHeader className="text-white p-0 relative">
-                <Image
+                {/* <Image
                   src={video.thumbnailPath}
                   alt={video.title}
                   className="rounded-sm"
                   width={170}
                   height={96}
                   priority
-                />
+                /> */}
+                <Avatar className={`rounded-sm w-[170px]  h-[96px]`}>
+                  <AvatarImage src={video.thumbnailPath} />
+                  <AvatarFallback></AvatarFallback>
+                </Avatar>
                 <Button
-                  className={`button-icon bg-custom-yellow rounded-full w-[50px] h-[50px] absolute bottom-[-60px] right-1 flex items-center justify-center opacity-0 transition-all duration-300 ease-in-out group-hover:bottom-1 group-hover:opacity-100 shadow-xl z-50 ${
-                    highlightedCardId === video.id
+                  className={`button-icon bg-custom-yellow rounded-full w-[50px] h-[50px] absolute bottom-[-60px] right-1 flex items-center justify-center opacity-0 transition-all duration-300 ease-in-out group-hover:bottom-1 group-hover:opacity-100 shadow-xl z-50 ${highlightedCardId === video.id
                       ? 'bg-custom-yellow text-custom-dark bottom-1 opacity-100'
                       : ''
-                  }`}
+                    }`}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleCardClick(video);
@@ -121,9 +124,8 @@ export default function Downloads() {
                 </button>
               </CardHeader>
               <div className="w-full pt-2 flex flex-col text-start">
-                <h1 className={`text-[16px] ${
-                  highlightedCardId === video.id ? 'text-custom-dark' : 'text-white'
-                } group-hover:text-custom-dark`}>
+                <h1 className={`text-[16px] ${highlightedCardId === video.id ? 'text-custom-dark' : 'text-white'
+                  } group-hover:text-custom-dark`}>
                   {truncateText(video.title, 30)}
                 </h1>
               </div>

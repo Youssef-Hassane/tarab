@@ -49,13 +49,20 @@ export default function ListOfVideoOfChannel() {
 						>
 							<div className="flex justify-between w-full items-center">
 								<div className="flex gap-2">
-									<Image
+									{/* <Image
 										src={video.snippet.thumbnails.default.url}
 										alt={video.snippet.title}
 										width={60}
 										height={60}
 										className="rounded-sm"
-									/>
+									/> */}
+
+									<Avatar className={`rounded-sm w-[60px]  h-[60px]`}>
+										<AvatarImage src={video.snippet.thumbnails.default.url} />
+										<AvatarFallback></AvatarFallback>
+									</Avatar>
+
+
 									<div className="flex flex-col">
 
 										<span className={`group-hover:text-custom-dark ${highlightedCardId === video.id.videoId ? 'text-custom-dark' : 'text-white'} `}>{truncateText(video.snippet.title, 30)}</span>
@@ -83,6 +90,7 @@ export default function ListOfVideoOfChannel() {
 // components/ListOfVideoOfChannel.tsx
 
 import React from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatarImage";
 
 export const ListOfVideoOfChannel2 = ({ channelVideos }) => {
 	if (!channelVideos || channelVideos.length === 0) {
@@ -97,13 +105,19 @@ export const ListOfVideoOfChannel2 = ({ channelVideos }) => {
 					className={`group flex items-center gap-2 p-2 hover:bg-custom-yellow hover:text-custom-dark rounded-sm cursor-pointer`}
 					onClick={() => setSelectedVideo(video)}
 				>
-					<Image
+					{/* <Image
 						src={video.snippet.thumbnails.default.url}
 						alt={video.snippet.title}
 						width={60}
 						height={60}
 						className="rounded-sm"
-					/>
+					/> */}
+
+					<Avatar className={`rounded-sm w-[60px]  h-[60px]`}>
+						<AvatarImage src={video.snippet.thumbnails.default.url} />
+						<AvatarFallback></AvatarFallback>
+					</Avatar>
+
 					<div className="flex flex-col">
 						<span className={`group-hover:text-custom-dark ${highlightedVideoId === video.id.videoId ? 'text-custom-dark' : 'text-white'}`}>
 							{truncateText(video.snippet.title, 30)}
