@@ -6,6 +6,8 @@ import { Separator } from "../ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar as AvatarI, AvatarFallback as AvatarFallbackI, AvatarImage as AvatarImageI } from "../ui/avatarImage";
+
 import { LogOut, MoreHorizontal, Settings, CircleUser } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from 'next/image';
@@ -72,10 +74,10 @@ export function SidebarDes(props: SidebarProps) {
 					priority
 				/> */}
 
-				<Avatar className={`rounded-none mx-3 w-[100px] h-[31.250px]`}>
-					<AvatarImage src="/logo-text.png" />
-					<AvatarFallback></AvatarFallback>
-				</Avatar>
+				<AvatarI className={`rounded-none mx-3 w-[100px] h-[31.250px]`}>
+					<AvatarImageI src="/logo-text.png" />
+					<AvatarFallbackI></AvatarFallbackI>
+				</AvatarI>
 
 				<div className="mt-5">
 					<div className="flex flex-col gap-1 w-full">
