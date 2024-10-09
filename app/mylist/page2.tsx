@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { Play, Pause, Heart, HeartCrack } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -12,9 +12,11 @@ import { fetchDefaultMusic, fetchChannelVideos } from '@/utils/fetchData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import FooterSection from '@/components/footer';
 import InformationOfTheChannel from '@/components/InformationOfTheChannel';
+import { Context_isDesktop } from '../home';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatarImage';
 
 
-export default function MyList({where}) {
+export default function MyList({ where }) {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -35,6 +37,8 @@ export default function MyList({where}) {
   const [message, setMessage] = useState<string>('');
   const videoEndProcessingRef = useRef(false); // Ref to track if video end logic is being processed
 
+  const isDesktopContext = useContext(Context_isDesktop);
+  const isDesktop = isDesktopContext;
 
 
   const truncateText = (text: string, maxLength: number) => {
@@ -77,7 +81,7 @@ export default function MyList({where}) {
 
         const videoIds = data.listOfSongs;
         const videoDataPromises = videoIds.map(async (videoId) => {
-          const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_MYLIST}&part=snippet&id=${videoId}`);
+          const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&id=${videoId}`);
           const videoData = await response.json();
           return videoData.items[0];
         });
@@ -275,7 +279,7 @@ export default function MyList({where}) {
   }
 
   return (
-    <div className="bg-custom-dark text-base-content rounded w-full pb-[70px] p-2">
+    <div className={`bg-custom-dark text-base-content rounded w-full pb-[70px] p-2`}>
       <h1 className="text-2xl font-bold mb-4 text-white">My List</h1>
       <div className="bg-custom-dark w-full rounded-lg overflow-hidden  p-1">
         <ScrollArea className="rounded-md bg-custom-dark w-full h-full overflow-auto">
@@ -287,14 +291,21 @@ export default function MyList({where}) {
 
                 <div className="p-2">
                   <CardHeader className="text-white p-0 relative">
-                    <Image
+                    {/*  <Image
                       src={video.snippet.thumbnails.high.url}
                       alt={video.snippet.title}
                       className="rounded-sm"
                       width={500}
                       height={500}
                       priority
-                    />
+                    /> */}
+                    <Avatar className={`rounded-sm ${isDesktop ? "h-[115px] w-[154px]" : "h-[40px] w-[40px]"}`}>
+                      <AvatarImage src={video.snippet.thumbnails.high.url} />
+                      <AvatarFallback></AvatarFallback>
+                    </Avatar>
+
+
+
                     <Button
                       className={`button-icon bg-custom-yellow rounded-full w-[50px] h-[50px] absolute bottom-[-60px] right-1 flex items-center justify-center opacity-0 transition-all duration-300 ease-in-out group-hover:bottom-1 group-hover:opacity-100 shadow-xl z-50 ${highlightedCardId === video.id
                         ? 'bg-custom-yellow text-custom-dark bottom-1 opacity-100'
@@ -375,19 +386,28 @@ export default function MyList({where}) {
                   <div className="p-2">
 
                     {favorites.length > 0 ? (
-                       favorites.filter(video => video?.snippet?.thumbnails?.high?.url).map((video: any) => (
+                      favorites.filter(video => video?.snippet?.thumbnails?.high?.url).map((video: any) => (
                         <div
                           key={video.id}
                           className={`group flex items-center gap-2 p-2 hover:bg-custom-yellow hover:text-custom-dark rounded-sm cursor-pointer ${highlightedCardId === video.id ? 'bg-custom-yellow text-custom-dark' : ''}`}
                           onClick={() => setSelectedVideo(video)}
                         >
-                          <Image
+
+
+                          {/* <Image
                             src={video.snippet.thumbnails.default.url}
                             alt={video.snippet.title}
                             width={60}
                             height={60}
                             className="rounded-sm"
-                          />
+                          /> */}
+
+
+                          <Avatar className={`rounded-sm ${isDesktop ? "h-[115px] w-[154px]" : "h-[40px] w-[40px]"}`}>
+                            <AvatarImage src={video.snippet.thumbnails.default.url} />
+                            <AvatarFallback></AvatarFallback>
+                          </Avatar>
+
                           <div className="flex flex-col">
 
                             <span className={`group-hover:text-custom-dark ${highlightedCardId === video.id ? 'text-custom-dark' : 'text-white'} `}>{truncateText(video.snippet.title, 30)}</span>

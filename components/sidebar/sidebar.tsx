@@ -14,8 +14,8 @@ const sidebarItems: SidebarItems = {
 		{ label: 'Artists', href: '/artists', icon: MicVocal },
 		{ label: 'Songs', href: '/song', icon: AudioWaveform },
 		{ label: 'My list', href: '/mylist', icon: List, },
-		{ label: 'Downloads', href: '', icon: CloudDownload },
-		{ label: 'Profile', href: '', icon: User },
+		
+		
 	],
 	extras: (
 		<div className='flex flex-col gap-2'>
