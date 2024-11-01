@@ -14,6 +14,7 @@ import AllContextsProvider from '@/components/AllContextsProvider';
 export const Context_email = createContext(null);
 export const Context_password = createContext(null);
 export const Context_error = createContext(null);
+export const Context_loggedInSuccessfully = createContext(null);
 export const Context_router = createContext(null);
 export const Context_user = createContext(null);
 export const Context_loading = createContext(null);
@@ -25,6 +26,7 @@ export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loggedInSuccessfully, setLoggedInSuccessfully] = useState('');
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -71,6 +73,7 @@ export default function LoginPage() {
         [Context_error, { error, setError }],
         [Context_user, { user, setUser }],
         [Context_loading, { loading, setLoading }],
+        [Context_loggedInSuccessfully, { loggedInSuccessfully, setLoggedInSuccessfully }],
     ];
 
     return (

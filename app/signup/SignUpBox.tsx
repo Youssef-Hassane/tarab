@@ -1,5 +1,3 @@
-
-
 import {
 	Context_email,
 	Context_password,
@@ -9,12 +7,10 @@ import {
 	Context_error
 } from '@/app/signup/page';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
-
 export default function SignUpBox({ supabase }) {
-
 	const emailContext = useContext(Context_email);
 	const passwordContext = useContext(Context_password);
 	const firstNameContext = useContext(Context_firstName);
@@ -32,6 +28,13 @@ export default function SignUpBox({ supabase }) {
 	const router = useRouter();
 
 	const handleSignUp = async () => {
+		// Basic validation
+		if (!email || !password || !firstName || !lastName || !username) {
+			setError('All fields are required');
+			setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
+			return;
+		}
+
 		try {
 			const { data, error } = await supabase.auth.signUp({
 				email,
@@ -42,9 +45,14 @@ export default function SignUpBox({ supabase }) {
 			});
 
 			if (error) {
-				setError('Error signing up');
+				if (error.message.includes('invalid email')) {
+					setError('Invalid email address');
+				} else if (error.message.includes('weak password')) {
+					setError('Password is too weak');
+				} else {
+					setError('Error signing up: ' + error.message);
+				}
 				setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
-
 				return;
 			}
 
@@ -62,19 +70,21 @@ export default function SignUpBox({ supabase }) {
 					]);
 
 				if (profileError) {
-					setError('Error saving profile data');
+					if (profileError.message.includes('duplicate key value')) {
+						setError('Username already taken');
+					} else {
+						setError('Error saving profile data: ' + profileError.message);
+					}
 					setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
-
 					return;
 				}
-
+				
 				router.push('/login');
 			}
 		} catch (error) {
 			console.error('Error signing up:', error);
-			setError('Error signing up');
+			setError('Unexpected error: ' + error.message);
 			setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
-
 		}
 	};
 

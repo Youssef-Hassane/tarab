@@ -18,6 +18,7 @@ export default async function Home() {
 
   if (!user) {
     redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/login`);
+    
     return null;
   }
 

@@ -1,48 +1,58 @@
 import Link from 'next/link';
 
-import { Context_email, Context_password, Context_error } from "@/app/login/page"
+import { Context_email, Context_password, Context_error, Context_loggedInSuccessfully } from "@/app/login/page"
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function LoginBox({supabase}) {
+export default function LoginBox({ supabase }) {
 
 	const emailContext = useContext(Context_email);
 	const passwordContext = useContext(Context_password);
 	const errorContext = useContext(Context_error);
+	const loggedInSuccessfullyContext = useContext(Context_loggedInSuccessfully);
 
 
 	const { email, setEmail } = emailContext || {};
 	const { password, setPassword } = passwordContext || {};
 	const { error, setError } = errorContext || {};
+	const { loggedInSuccessfully, setLoggedInSuccessfully } = loggedInSuccessfullyContext || {};
 
 
 	const router = useRouter();
 
-    const handleSignIn = async () => {
-        try {
-            const { error } = await supabase.auth.signInWithPassword({
-                email,
-                password
-            });
-            if (error) {
-                setError('Invalid Email or Password');
-                setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
-                return;
-            }
-            router.push('/home');
-            router.refresh();
-        } catch (error) {
-            console.error('Error signing in:', error);
-            setError('Error signing in');
-            setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
-        }
-    };
+	const handleSignIn = async () => {
+		try {
+			const { error } = await supabase.auth.signInWithPassword({
+				email,
+				password
+			});
+			if (error) {
+				console.error('Error signing in:', error);
+				setError("Password or Email is incorrect");
+				setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
+				return;
+			}
+			setLoggedInSuccessfully("Logged in successfully");
+			setTimeout(() => setLoggedInSuccessfully(''), 3000); // Clear error after 3 seconds
+			router.push('/home');
+			router.refresh();
+		} catch (error) {
+			console.error('Error signing in:', error);
+			setError("Password or Email is incorrect");
+			setTimeout(() => setError(''), 3000); // Clear error after 3 seconds
+		}
+	};
 
 	return (
 		<div className="pt-8 rounded-lg  w-auto max-w-80 z-50 relative flex-col items-center justify-center">
 			{error && (
-				<p className="mb-4 text-sm font-bold text-red-500 absolute top-0 left-1/2 transform -translate-x-1/2 ">
+				<p className="mb-4 text-sm font-bold text-red-500 absolute top-0 left-1/2 transform -translate-x-1/2 w-full text-center">
 					{error}
+				</p>
+			)}
+			{loggedInSuccessfully && (
+				<p className="mb-4 text-sm font-bold text-green-500 absolute top-0 left-1/2 transform -translate-x-1/2 w-full text-center">
+					{loggedInSuccessfully}
 				</p>
 			)}
 

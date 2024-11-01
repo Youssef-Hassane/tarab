@@ -4,9 +4,16 @@ import TopArtists from "@/components/Home/TopArtists";
 import TopSongs from "@/components/Home/TopSongs";
 import { Separator } from "@/components/ui/separator";
 import MyList from '../mylist/page';
+import { use, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 
 export default function HomePage() {
+	const router = useRouter();
+
+	useEffect(() => {
+		router.refresh();
+	}, []);
 
 	return (
 		<div className="bg-red-500 h-[100%] w-[100%] ">
